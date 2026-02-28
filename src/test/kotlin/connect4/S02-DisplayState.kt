@@ -43,13 +43,13 @@ class DisplayState {
         assert(cell.value == symbol)
     }
 
-    @Then("empty positions show as ◯")
-    fun emptyPositionsShowAsEmptyCircle() {
+    @Then("empty positions show as {string}")
+    fun emptyPositionsShowAs(symbol: String) {
         for (col in 1..7) {
             for (row in 1..6) {
                 val cell = game.board.getAt(Position(col, row))
                 if(cell == Cell.EMPTY) {
-                    assertEquals("◯", cell.value)
+                    assertEquals(symbol, cell.value)
                 }
             }
         }
