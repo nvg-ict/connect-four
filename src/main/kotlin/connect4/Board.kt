@@ -1,9 +1,14 @@
 package nl.craftsmen.connect4
 
 class Board(val rows: Int, val cols: Int) {
+    private val grid = Array(rows) { Array(cols) { Cell.EMPTY } }
 
     fun setAt(position: Position, cell: Cell) {
+        grid[position.rowIndex][position.columnIndex] = cell
+    }
 
+    fun getAt(position: Position): Cell {
+        return grid[position.rowIndex][position.columnIndex]
     }
 
     fun render()= buildString {
@@ -31,7 +36,7 @@ enum class Cell(
     }
 }
 
-class Position(val column: Int, val row: Int) {
-    val columnIndex get() = column - 1
+class Position(private val row: Int, private val column: Int) {
     val rowIndex get() = row - 1
+    val columnIndex get() = column - 1
 }

@@ -3,6 +3,7 @@ package connect4
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import nl.craftsmen.connect4.BoardRenderer
 import nl.craftsmen.connect4.Cell
 import nl.craftsmen.connect4.Game
 import nl.craftsmen.connect4.Position
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.assertNotNull
 
 class DisplayState {
     private lateinit var game: Game
+    private val boardRenderer = BoardRenderer()
 
     @Given("the game has started and coins are placed on the board")
     fun theGameHasStartedAndCoinsArePlacedOnTheBoard() {
@@ -24,17 +26,20 @@ class DisplayState {
 
     @When("the board state is displayed")
     fun theBoardStateIsDisplayed() {
-        TODO("Implement step")
+        val output = boardRenderer.render(game.board)
+        assertNotNull(output)
     }
 
     @Then("Player 1's coin shows as {string} in column {int} row {int}")
     fun player1CoinShowsAsInPosition(symbol: String, column: Int, row: Int) {
-        TODO("Implement step")
+        val cell = game.board.getAt(Position(column, row))
+        assert(cell.value == symbol)
     }
 
     @Then("Player 2's coin shows as {string} in column {int} row {int}")
     fun player2CoinShowsAsInPosition(symbol: String, column: Int, row: Int) {
-        TODO("Implement step")
+        val cell = game.board.getAt(Position(column, row))
+        assert(cell.value == symbol)
     }
 
     @Then("empty positions show as ◯")
