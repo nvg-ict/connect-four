@@ -40,13 +40,17 @@ class GameInit {
     @And("columns are labeled 1 through 7")
     fun columnsAreLabeled1Through7() {
         val column = output.split('\n')[0]
-        for (c in 1..7) {
+        for (c in 1 until 7) {
             assertTrue(column.contains(c.toString()))
         }
     }
 
-    @Then("rows are labeled 1 through 6 (bottom to top)")
+    @Then("rows are labeled 1 through 6 \\(bottom to top)")
     fun rowsAreLabeled1Through6BottomToTop() {
-        TODO("Implement step")
+        val rows = output.split('\n')
+        for (i in 1..6) {
+            val expectedRow = 7 - i
+            assertTrue(rows[i].startsWith(expectedRow.toString()))
+        }
     }
 }

@@ -11,7 +11,14 @@ class Board(val rows: Int, val cols: Int) {
         }
         sb.appendLine()
 
-        sb.append( "◯".repeat(rows * cols))
+        for (r in rows downTo 1) {
+            sb.append("$r ")
+            for (c in 1..cols) {
+                sb.append("◯")
+            }
+            if (r != 1) sb.appendLine()
+        }
+
         return sb.toString()
     }
 }
