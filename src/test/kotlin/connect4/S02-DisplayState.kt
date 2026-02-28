@@ -3,12 +3,20 @@ package connect4
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import nl.craftsmen.connect4.Cell
+import nl.craftsmen.connect4.Game
+import nl.craftsmen.connect4.Position
+import org.junit.jupiter.api.assertNotNull
 
 class DisplayState {
+    private lateinit var game: Game
 
     @Given("the game has started and coins are placed on the board")
     fun theGameHasStartedAndCoinsArePlacedOnTheBoard() {
-        TODO("Implement step")
+        game = Game()
+        game.board.setAt(Position(1, 1), Cell.PLAYER1)
+        game.board.setAt(Position(2,1), Cell.PLAYER2)
+        assertNotNull(game)
     }
 
     @Given("column {int} row {int} contains a Player {int} coin")

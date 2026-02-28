@@ -2,6 +2,10 @@ package nl.craftsmen.connect4
 
 class Board(val rows: Int, val cols: Int) {
 
+    fun setAt(position: Position, cell: Cell) {
+
+    }
+
     fun render()= buildString {
         // Column labels
         appendLine((1..cols).joinToString(" "))
@@ -12,4 +16,17 @@ class Board(val rows: Int, val cols: Int) {
             appendLine("$r $cells")
         }
     }.trimEnd()
+}
+
+enum class Cell(
+    val value: String,
+) {
+    EMPTY("◯"),
+    PLAYER1("🟡"),
+    PLAYER2("🔴")
+}
+
+class Position(val column: Int, val row: Int) {
+    val columnIndex get() = column - 1
+    val rowIndex get() = row - 1
 }
