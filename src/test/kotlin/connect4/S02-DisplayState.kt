@@ -8,6 +8,7 @@ import nl.craftsmen.connect4.Cell
 import nl.craftsmen.connect4.Game
 import nl.craftsmen.connect4.Position
 import org.junit.jupiter.api.assertNotNull
+import kotlin.test.assertEquals
 
 class DisplayState {
     private lateinit var game: Game
@@ -44,6 +45,13 @@ class DisplayState {
 
     @Then("empty positions show as ◯")
     fun emptyPositionsShowAsEmptyCircle() {
-        TODO("Implement step")
+        for (col in 1..7) {
+            for (row in 1..6) {
+                val cell = game.board.getAt(Position(col, row))
+                if(cell == Cell.EMPTY) {
+                    assertEquals("◯", cell.value)
+                }
+            }
+        }
     }
 }
