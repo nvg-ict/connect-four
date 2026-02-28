@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Game
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.assertNotNull
 import kotlin.test.assertEquals
 
@@ -38,7 +39,10 @@ class GameInit {
 
     @And("columns are labeled 1 through 7")
     fun columnsAreLabeled1Through7() {
-        TODO("Implement step")
+        val column = output.split('\n')[0]
+        for (c in 1..7) {
+            assertTrue(column.contains(c.toString()))
+        }
     }
 
     @Then("rows are labeled 1 through 6 (bottom to top)")
