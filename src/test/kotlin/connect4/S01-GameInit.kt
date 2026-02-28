@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Game
+import org.junit.jupiter.api.assertNotNull
 
 class GameInit {
     private lateinit var game: Game
@@ -13,11 +14,13 @@ class GameInit {
     @Given("the game is started")
     fun theGameIsStarted() {
         game = Game()
+        assertNotNull(game)
     }
 
     @When("the board is initialized")
     fun theBoardIsInitialized() {
-        TODO("Implement step")
+        output = game.board.render()
+        assertNotNull(output)
     }
 
     @Then("the board displays 6 rows and 7 columns")
