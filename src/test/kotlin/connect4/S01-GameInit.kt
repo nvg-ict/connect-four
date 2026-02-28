@@ -4,11 +4,15 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import nl.craftsmen.connect4.Game
 
 class GameInit {
+    private lateinit var game: Game
+    private lateinit var output: String
+
     @Given("the game is started")
     fun theGameIsStarted() {
-        TODO("Implement step")
+        game = Game()
     }
 
     @When("the board is initialized")
