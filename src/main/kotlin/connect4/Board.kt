@@ -2,23 +2,14 @@ package nl.craftsmen.connect4
 
 class Board(val rows: Int, val cols: Int) {
 
-    fun render(): String {
-        val sb = StringBuilder()
+    fun render()= buildString {
+        // Column labels
+        appendLine((1..cols).joinToString(" "))
 
-        // Add row for column labels
-        for (c in 1..cols) {
-            sb.append("$c ")
-        }
-        sb.appendLine()
-
+        // Each board row: row label + cells
+        val cells = "◯".repeat(cols)
         for (r in rows downTo 1) {
-            sb.append("$r ")
-            for (c in 1..cols) {
-                sb.append("◯")
-            }
-            if (r != 1) sb.appendLine()
+            appendLine("$r $cells")
         }
-
-        return sb.toString()
-    }
+    }.trimEnd()
 }
