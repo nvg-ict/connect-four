@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Game
 import org.junit.jupiter.api.assertNotNull
+import kotlin.test.assertEquals
 
 class GameInit {
     private lateinit var game: Game
@@ -25,7 +26,8 @@ class GameInit {
 
     @Then("the board displays 6 rows and 7 columns")
     fun theBoardDisplays6RowsAnd7Columns() {
-        TODO("Implement step")
+        assertEquals(6, game.board.rows)
+        assertEquals(7, game.board.cols)
     }
 
     @Then("all 42 positions show empty spaces {string}")
