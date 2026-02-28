@@ -14,14 +14,12 @@ class DisplayState {
     @Given("the game has started and coins are placed on the board")
     fun theGameHasStartedAndCoinsArePlacedOnTheBoard() {
         game = Game()
-        game.board.setAt(Position(1, 1), Cell.PLAYER1)
-        game.board.setAt(Position(2,1), Cell.PLAYER2)
         assertNotNull(game)
     }
 
     @Given("column {int} row {int} contains a Player {int} coin")
     fun columnRowContainsAPlayerCoin(column: Int, row: Int, player: Int) {
-        TODO("Implement step")
+        game.board.setAt(Position(column, row), Cell.fromId(player) ?: Cell.EMPTY)
     }
 
     @When("the board state is displayed")

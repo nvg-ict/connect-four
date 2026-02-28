@@ -20,10 +20,15 @@ class Board(val rows: Int, val cols: Int) {
 
 enum class Cell(
     val value: String,
+    val id: Int? = null
 ) {
     EMPTY("◯"),
-    PLAYER1("🟡"),
-    PLAYER2("🔴")
+    PLAYER1("🟡", 1),
+    PLAYER2("🔴", 2);
+
+    companion object {
+        fun fromId(id: Int): Cell? = entries.find { it.id == id }
+    }
 }
 
 class Position(val column: Int, val row: Int) {
