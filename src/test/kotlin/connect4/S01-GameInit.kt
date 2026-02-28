@@ -31,8 +31,9 @@ class GameInit {
     }
 
     @Then("all 42 positions show empty spaces {string}")
-    fun all42PositionsShowEmptySpaces() {
-        TODO("Implement step")
+    fun all42PositionsShowEmptySpaces(symbol: String) {
+        val count = output.count { it.toString() == symbol }
+        assertEquals(42, count)
     }
 
     @And("columns are labeled 1 through 7")
