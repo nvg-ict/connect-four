@@ -40,7 +40,8 @@ class CoinDrop {
 
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
     fun thePositionRecordsAYellowCoinAtCoordinates(coin: String, row: Int, column: Int) {
-        TODO("Implement step")
+        assertEquals(coin, Cell.PLAYER1.value)
+        assertEquals(Cell.PLAYER1, board.getAt(Position(row = row, column = column)))
     }
 
     @Given("column {int} is completely full with {int} coins stacked from row {int} to row {int}")
