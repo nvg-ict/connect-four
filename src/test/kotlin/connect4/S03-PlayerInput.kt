@@ -4,12 +4,17 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import nl.craftsmen.connect4.Cell
+import nl.craftsmen.connect4.Game
+import nl.craftsmen.connect4.Player
 
 class PlayerInput {
+    private lateinit var game: Game
 
     @Given("it is Player {int}'s turn")
     fun itIsPlayersTurn(player: Int) {
-        TODO("Implement step")
+        game = Game()
+        game.currentPlayer = if(player == 1) Player.P1 else Player.P2
     }
 
     @When("Player {int} enters column {int}")
@@ -32,7 +37,7 @@ class PlayerInput {
         TODO("Implement step")
     }
 
-    @And("Player {int} is re-prompted to select a valid column \\(1-7\\)")
+    @And("Player {int} is re-prompted to select a valid column \\(1-7)")
     fun playerIsRepromptedToSelectAValidColumn(player: Int) {
         TODO("Implement step")
     }
