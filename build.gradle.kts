@@ -3,6 +3,8 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
 }
 
+apply<TechDebtPlugin>()
+
 group = "nl.craftsmen"
 version = "1.0-SNAPSHOT"
 
@@ -37,4 +39,5 @@ tasks.test {
 
 tasks.check {
     dependsOn(tasks.detekt)
+    dependsOn("techDebtTodoCheck")
 }
