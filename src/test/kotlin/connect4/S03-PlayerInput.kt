@@ -5,21 +5,32 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Cell
+import nl.craftsmen.connect4.ColumnInputValidator
 import nl.craftsmen.connect4.Game
+import nl.craftsmen.connect4.MoveResult
 import nl.craftsmen.connect4.Player
+import nl.craftsmen.connect4.TurnController
+import kotlin.test.assertEquals
 
 class PlayerInput {
     private lateinit var game: Game
+    private lateinit var result: MoveResult
+    private lateinit var controller: TurnController
 
     @Given("it is Player {int}'s turn")
     fun itIsPlayersTurn(player: Int) {
         game = Game()
+        controller = TurnController(ColumnInputValidator())
         game.currentPlayer = if(player == 1) Player.P1 else Player.P2
     }
 
     @When("Player {int} enters column {int}")
     fun playerEntersColumn(player: Int, column: Int) {
-        TODO("Implement step")
+        val expectedPlayer = if (player == 1) Player.P1 else Player.P2
+
+        assertEquals(expectedPlayer, game.currentPlayer)
+
+        result = controller.handleInput(column.toString())
     }
 
     @Then("the column number {int} is accepted")
