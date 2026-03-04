@@ -10,6 +10,7 @@ import nl.craftsmen.connect4.DropResult
 import nl.craftsmen.connect4.Player
 import nl.craftsmen.connect4.Position
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CoinDrop {
     private lateinit var board: Board
@@ -57,7 +58,7 @@ class CoinDrop {
 
     @Then("the move is rejected")
     fun theMoveIsRejected() {
-        TODO("Implement step")
+        assertTrue(dropResult is DropResult.Failure)
     }
 
     @Then("an error message states {string}")
