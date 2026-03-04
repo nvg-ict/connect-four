@@ -1,8 +1,17 @@
 package connect.four
 
 class Game(val gameRules: GameRules) {
+
     val board = Board(rows = gameRules.rows, cols = gameRules.cols)
     var currentPlayer: Player = Player.P1
+
+    fun turnIndicator(): String {
+        return "Player 1's turn"
+    }
+
+    fun applyMove(column: Int) {
+
+    }
 }
 
 enum class Player {

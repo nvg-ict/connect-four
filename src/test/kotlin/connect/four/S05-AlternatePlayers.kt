@@ -4,6 +4,7 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import kotlin.test.assertEquals
 
 class AlternatePlayers {
     private lateinit var game: Game
@@ -15,25 +16,30 @@ class AlternatePlayers {
 
     @When("the game is ready for play")
     fun theGameIsReadyForPlay() {
-        TODO("Implement step")
+        // Nothing for now
     }
 
-    @Then("the game indicates {string} \\(🟡\\)")
+    @Then("the game indicates {string} \\(🟡)")
     fun theGameIndicatesPlayer1Turn(message: String) {
-        TODO("Implement step")
+        assertEquals(message, game.turnIndicator())
+        assertEquals(Player.P1, game.currentPlayer)
     }
 
-    @And("Player {int} drops a coin")
-    fun playerDropsACoin(player: Int) {
-        TODO("Implement step")
+    @And("Player {int} drops a coin in {int}")
+    fun playerDropsACoin(player: Int, column: Int) {
+        val currentPlayer = if (player == 1) Player.P1 else Player.P2
+
+        assertEquals(currentPlayer, game.currentPlayer)
+
+        game.applyMove(column)
     }
 
-    @And("the game indicates {string} \\(🔴\\)")
+    @And("the game indicates {string} \\(🔴)")
     fun theGameIndicatesPlayer2Turn(message: String) {
         TODO("Implement step")
     }
 
-    @Then("the game again indicates {string} \\(🟡\\)")
+    @Then("the game again indicates {string} \\(🟡)")
     fun theGameAgainIndicatesPlayer1Turn(message: String) {
         TODO("Implement step")
     }

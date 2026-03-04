@@ -4,7 +4,7 @@ Feature: Alternate Players
     Given a new game has been initialized
     When the game is ready for play
     Then the game indicates "Player 1's turn" (🟡)
-    And Player 1 drops a coin
+    And Player 1 drops a coin in 1
     And the game indicates "Player 2's turn" (🔴)
-    And Player 2 drops a coin
+    And Player 2 drops a coin in 2
     Then the game again indicates "Player 1's turn" (🟡)
