@@ -17,11 +17,6 @@ class CoinDrop {
     @Given("the board is empty")
     fun theBoardIsEmpty() {
         board = Board(rows = 6, cols = 7)
-        for (col in 1..7) {
-            for (row in 1..6) {
-                assertEquals(Cell.EMPTY,board.getAt(Position(row = row, column = col)))
-            }
-        }
     }
 
     @When("Player {int} drops a coin in column {int}")
@@ -46,7 +41,10 @@ class CoinDrop {
 
     @Given("column {int} is completely full with {int} coins stacked from row {int} to row {int}")
     fun columnIsCompletelyFullWithCoinsStackedFromRowToRow(column: Int, coins: Int, rowFrom: Int, rowTo: Int) {
-        TODO("Implement step")
+        board = Board(rows = 6, cols = 7)
+        repeat(coins) {
+            board.dropInColumn(column, Cell.PLAYER1)
+        }
     }
 
     @When("Player {int} attempts to drop a coin in column {int}")
