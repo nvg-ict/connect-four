@@ -1,0 +1,1 @@
+![CI](https://github.com/nvg-ict/connect-four/actions/workflows/ci.yml/badge.svg)
