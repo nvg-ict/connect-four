@@ -35,7 +35,7 @@ class PlayerInput {
 
     @Then("the column number {int} is accepted")
     fun theColumnNumberIsAccepted(column: Int) {
-        TODO("Implement step")
+        assertEquals(MoveResult.Accepted(column), result);
     }
 
     @Then("the input is rejected with an error message")
