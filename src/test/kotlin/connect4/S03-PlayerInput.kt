@@ -7,6 +7,7 @@ import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Cell
 import nl.craftsmen.connect4.ColumnInputValidator
 import nl.craftsmen.connect4.Game
+import nl.craftsmen.connect4.GameRules
 import nl.craftsmen.connect4.MoveResult
 import nl.craftsmen.connect4.Player
 import nl.craftsmen.connect4.TurnController
@@ -14,6 +15,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class PlayerInput {
+    private lateinit var rules: GameRules
     private lateinit var game: Game
     private lateinit var result: MoveResult
     private lateinit var controller: TurnController
@@ -21,7 +23,8 @@ class PlayerInput {
 
     @Given("it is Player {int}'s turn")
     fun itIsPlayersTurn(player: Int) {
-        game = Game()
+        rules = GameRules()
+        game = Game(rules)
         controller = TurnController(ColumnInputValidator()) { col ->
             processedColumn = col
         }

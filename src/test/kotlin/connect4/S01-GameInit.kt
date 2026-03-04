@@ -6,18 +6,21 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.BoardRenderer
 import nl.craftsmen.connect4.Game
+import nl.craftsmen.connect4.GameRules
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.assertNotNull
 import kotlin.test.assertEquals
 
 class GameInit {
+    private lateinit var rules: GameRules
     private lateinit var game: Game
     private lateinit var renderer: BoardRenderer
     private lateinit var output: String
 
     @Given("the game is started")
     fun theGameIsStarted() {
-        game = Game()
+        rules = GameRules()
+        game = Game(rules)
         renderer = BoardRenderer()
         assertNotNull(game)
     }
