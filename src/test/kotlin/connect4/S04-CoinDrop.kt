@@ -4,12 +4,22 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import nl.craftsmen.connect4.Board
+import nl.craftsmen.connect4.Cell
+import nl.craftsmen.connect4.Position
+import kotlin.test.assertEquals
 
 class CoinDrop {
+    private lateinit var board: Board
 
     @Given("the board is empty")
     fun theBoardIsEmpty() {
-        TODO("Implement step")
+        board = Board(rows = 6, cols = 7)
+        for (col in 1..7) {
+            for (row in 1..6) {
+                assertEquals(Cell.EMPTY,board.getAt(Position(row = row, column = col)))
+            }
+        }
     }
 
     @When("Player {int} drops a coin in column {int}")
