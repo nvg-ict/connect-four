@@ -6,10 +6,11 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class AlternatePlayers {
+    private lateinit var game: Game
 
     @Given("a new game has been initialized")
     fun aNewGameHasBeenInitialized() {
-        TODO("Implement step")
+        game = Game(GameRules())
     }
 
     @When("the game is ready for play")
