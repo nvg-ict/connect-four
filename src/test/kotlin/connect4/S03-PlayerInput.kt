@@ -11,16 +11,20 @@ import nl.craftsmen.connect4.MoveResult
 import nl.craftsmen.connect4.Player
 import nl.craftsmen.connect4.TurnController
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class PlayerInput {
     private lateinit var game: Game
     private lateinit var result: MoveResult
     private lateinit var controller: TurnController
+    private var processedColumn: Int? = null
 
     @Given("it is Player {int}'s turn")
     fun itIsPlayersTurn(player: Int) {
         game = Game()
-        controller = TurnController(ColumnInputValidator())
+        controller = TurnController(ColumnInputValidator()) { col ->
+            processedColumn = col
+        }
         game.currentPlayer = if(player == 1) Player.P1 else Player.P2
     }
 
@@ -45,7 +49,7 @@ class PlayerInput {
 
     @And("the game processes the move to drop a coin")
     fun theGameProcessesTheMoveToDropACoin() {
-        TODO("Implement step")
+        assertNotNull(processedColumn)
     }
 
     @And("Player {int} is re-prompted to select a valid column \\(1-7)")

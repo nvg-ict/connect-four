@@ -1,11 +1,13 @@
 package nl.craftsmen.connect4
 
 class TurnController(
-    private val validator: ColumnInputValidator
+    private val validator: ColumnInputValidator,
+    private val onAcceptedMove: (column: Int) -> Unit
 ) {
     fun handleInput(raw: String): MoveResult =
         when (val res = validator.validate(raw)) {
             is MoveResult.Accepted -> {
+                onAcceptedMove(res.column)
                 res
             }
             is MoveResult.Rejected -> res
