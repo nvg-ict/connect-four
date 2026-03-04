@@ -6,13 +6,14 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Board
 import nl.craftsmen.connect4.Cell
+import nl.craftsmen.connect4.DropResult
 import nl.craftsmen.connect4.Player
 import nl.craftsmen.connect4.Position
 import kotlin.test.assertEquals
 
 class CoinDrop {
     private lateinit var board: Board
-    private lateinit var processedPosition: Position
+    private lateinit var dropResult: DropResult
 
     @Given("the board is empty")
     fun theBoardIsEmpty() {
@@ -24,13 +25,12 @@ class CoinDrop {
         val currentPlayer = if(player == 1) Player.P1 else Player.P2
         val cell = Cell.forPlayer(currentPlayer)
 
-        processedPosition = board.dropInColumn(column, cell)
+        dropResult = board.dropInColumn(column, cell)
     }
 
     @Then("the coin lands in row {int} of column {int}")
     fun theCoinLandsInRowOfColumn(row: Int, column: Int) {
-        assertEquals(column,processedPosition.column)
-        assertEquals(row,processedPosition.row)
+        assertEquals(DropResult.Success(Position(column, row)),dropResult)
     }
 
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
@@ -49,7 +49,10 @@ class CoinDrop {
 
     @When("Player {int} attempts to drop a coin in column {int}")
     fun playerAttemptsToDropACoinInColumn(player: Int, column: Int) {
-        TODO("Implement step")
+        val currentPlayer = if(player == 1) Player.P1 else Player.P2
+        val cell = Cell.forPlayer(currentPlayer)
+
+        dropResult = board.dropInColumn(column, cell)
     }
 
     @Then("the move is rejected")

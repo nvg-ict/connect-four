@@ -11,16 +11,21 @@ class Board(val rows: Int, val cols: Int) {
         return grid[position.rowIndex][position.columnIndex]
     }
 
-    fun dropInColumn(column: Int, cell: Cell): Position {
+    fun dropInColumn(column: Int, cell: Cell): DropResult {
         for (row in 1..rows) {
             val position = Position(column, row)
             if (getAt(position) == Cell.EMPTY) {
                 setAt(position, cell)
-                return position
+                return DropResult.Success(position)
             }
         }
-        error("Column $column is full")
+        return DropResult.Failure("Column $column is full")
     }
+}
+
+sealed interface DropResult {
+    data class Success(val position: Position) : DropResult
+    data class Failure(val errorMessage: String) : DropResult
 }
 
 enum class Cell(
@@ -37,7 +42,7 @@ enum class Cell(
     }
 }
 
-class Position(val column: Int, val row: Int) {
+data class Position(val column: Int, val row: Int) {
     val rowIndex get() = row - 1
     val columnIndex get() = column - 1
 }
