@@ -1,7 +1,6 @@
 package connect.four
 
 class Game(val gameRules: GameRules) {
-
     val board = Board(rows = gameRules.rows, cols = gameRules.cols)
     var currentPlayer: Player = Player.P1
 

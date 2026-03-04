@@ -42,6 +42,13 @@ class CoinDrop {
         }
     }
 
+    @And("column {int} has {int} coin")
+    fun OtherColumnHasCoins(column: Int, coins: Int) {
+        repeat(coins) {
+            game.applyMove(column)
+        }
+    }
+
     @When("Player {int} attempts to drop a coin in column {int}")
     fun playerAttemptsToDropACoinInColumn(player: Int, column: Int) {
         assertEquals("Player ${player}'s turn",game.turnIndicator())
@@ -60,6 +67,11 @@ class CoinDrop {
 
     @And("Player {int} is re-prompted to select a different column")
     fun playerIsRepromptedToSelectADifferentColumn(player: Int) {
+        assertEquals("Player ${player}'s turn",game.turnIndicator())
+    }
+
+    @And("it remains Player {int}'s turn \\(turn does not advance)")
+    fun itRemainsPlayersTurn(player: Int) {
         assertEquals("Player ${player}'s turn",game.turnIndicator())
     }
 }
