@@ -40,7 +40,7 @@ class PlayerInput {
 
     @Then("the input is rejected with an error message")
     fun theInputIsRejectedWithAnErrorMessage() {
-        TODO("Implement step")
+        assertEquals(MoveResult.Rejected("Invalid column. Choose a column (1-7)."), result);
     }
 
     @And("the game processes the move to drop a coin")
