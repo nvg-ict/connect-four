@@ -8,20 +8,18 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class CoinDrop {
-    private lateinit var board: Board
+    private lateinit var game: Game
     private lateinit var dropResult: DropResult
 
     @Given("the board is empty")
     fun theBoardIsEmpty() {
-        board = Board(rows = 6, cols = 7)
+        game = Game(GameRules())
     }
 
+    @Suppress("UnusedParameter")
     @When("Player {int} drops a coin in column {int}")
     fun playerDropsACoinInColumn(player: Int, column: Int) {
-        val currentPlayer = if(player == 1) Player.P1 else Player.P2
-        val cell = Cell.forPlayer(currentPlayer)
-
-        dropResult = board.dropInColumn(column, cell)
+         dropResult = game.applyMove(column)
     }
 
     @Then("the coin lands in row {int} of column {int}")
@@ -32,24 +30,22 @@ class CoinDrop {
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
     fun thePositionRecordsAYellowCoinAtCoordinates(coin: String, row: Int, column: Int) {
         assertEquals(coin, Cell.PLAYER1.value)
-        assertEquals(Cell.PLAYER1, board.getAt(Position(row = row, column = column)))
+        assertEquals(Cell.PLAYER1, game.board.getAt(Position(row = row, column = column)))
     }
 
     @Suppress("UnusedParameter")
     @Given("column {int} is completely full with {int} coins stacked from row {int} to row {int}")
     fun columnIsCompletelyFullWithCoinsStackedFromRowToRow(column: Int, coins: Int, rowFrom: Int, rowTo: Int) {
-        board = Board(rows = 6, cols = 7)
+        game = Game(GameRules())
         repeat(coins) {
-            board.dropInColumn(column, Cell.PLAYER1)
+            game.applyMove(column)
         }
     }
 
     @When("Player {int} attempts to drop a coin in column {int}")
     fun playerAttemptsToDropACoinInColumn(player: Int, column: Int) {
-        val currentPlayer = if(player == 1) Player.P1 else Player.P2
-        val cell = Cell.forPlayer(currentPlayer)
-
-        dropResult = board.dropInColumn(column, cell)
+        assertEquals("Player ${player}'s turn",game.turnIndicator())
+        dropResult = game.applyMove(column)
     }
 
     @Then("the move is rejected")
@@ -62,9 +58,8 @@ class CoinDrop {
         assertEquals(DropResult.Failure(message), dropResult)
     }
 
-    @Suppress("UnusedParameter", "ForbiddenComment")
     @And("Player {int} is re-prompted to select a different column")
     fun playerIsRepromptedToSelectADifferentColumn(player: Int) {
-        //TODO: crossing UI boundary sorta, we will have to adjust the test structure to verify this.
+        assertEquals("Player ${player}'s turn",game.turnIndicator())
     }
 }

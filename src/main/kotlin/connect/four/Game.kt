@@ -9,10 +9,10 @@ class Game(val gameRules: GameRules) {
         return "${currentPlayer.label}'s turn"
     }
 
-    fun applyMove(column: Int) {
-        board.dropInColumn(column, Cell.forPlayer(currentPlayer))
-        currentPlayer = currentPlayer.other()
-    }
+    fun applyMove(column: Int): DropResult =
+        board.dropInColumn(column, Cell.forPlayer(currentPlayer)).also {
+            if (it is DropResult.Success) currentPlayer = currentPlayer.other()
+        }
 }
 
 enum class Player(val label: String) {
