@@ -11,10 +11,12 @@ class Board(val rows: Int, val cols: Int) {
         return grid[position.rowIndex][position.columnIndex]
     }
 
-    fun dropInColumn(column: Int, cell: Cell) {
+    fun dropInColumn(column: Int, cell: Cell): Position {
         for (row in 1..rows) {
-            if (getAt(Position(column, row)) == Cell.EMPTY) {
-                setAt(Position(column, row), cell)
+            val position = Position(column, row)
+            if (getAt(position) == Cell.EMPTY) {
+                setAt(position, cell)
+                return position
             }
         }
         error("Column $column is full")

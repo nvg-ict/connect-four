@@ -12,6 +12,7 @@ import kotlin.test.assertEquals
 
 class CoinDrop {
     private lateinit var board: Board
+    private lateinit var processedPosition: Position
 
     @Given("the board is empty")
     fun theBoardIsEmpty() {
@@ -28,12 +29,13 @@ class CoinDrop {
         val currentPlayer = if(player == 1) Player.P1 else Player.P2
         val cell = Cell.forPlayer(currentPlayer)
 
-        board.dropInColumn(column, cell)
+        processedPosition = board.dropInColumn(column, cell)
     }
 
     @Then("the coin lands in row {int} of column {int}")
     fun theCoinLandsInRowOfColumn(row: Int, column: Int) {
-        TODO("Implement step")
+        assertEquals(column,processedPosition.column)
+        assertEquals(row,processedPosition.row)
     }
 
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
