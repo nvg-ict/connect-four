@@ -1,12 +1,9 @@
-package connect4
+package connect.four
 
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import nl.craftsmen.connect4.BoardRenderer
-import nl.craftsmen.connect4.Game
-import nl.craftsmen.connect4.GameRules
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.assertNotNull
 import kotlin.test.assertEquals

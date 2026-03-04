@@ -1,4 +1,4 @@
-package nl.craftsmen.connect4
+package connect.four
 
 class Board(val rows: Int, val cols: Int) {
     private val grid = Array(rows) { Array(cols) { Cell.EMPTY } }

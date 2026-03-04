@@ -1,16 +1,9 @@
-package connect4
+package connect.four
 
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import nl.craftsmen.connect4.Cell
-import nl.craftsmen.connect4.ColumnInputValidator
-import nl.craftsmen.connect4.Game
-import nl.craftsmen.connect4.GameRules
-import nl.craftsmen.connect4.MoveResult
-import nl.craftsmen.connect4.Player
-import nl.craftsmen.connect4.TurnController
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 

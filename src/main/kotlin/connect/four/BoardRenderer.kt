@@ -1,4 +1,4 @@
-package nl.craftsmen.connect4
+package connect.four
 
 class BoardRenderer {
     fun render(board: Board): String = buildString {

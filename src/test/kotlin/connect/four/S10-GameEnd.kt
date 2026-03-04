@@ -1,4 +1,5 @@
-package connect4
+@file:Suppress("UnusedParameter")
+package connect.four
 
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then

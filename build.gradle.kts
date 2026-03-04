@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.3.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.6"
 }
 
 group = "nl.craftsmen"
@@ -24,6 +25,16 @@ kotlin {
     jvmToolchain(17)
 }
 
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom("$rootDir/config/detekt/detekt.yml")
+}
+
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.check {
+    dependsOn(tasks.detekt)
 }

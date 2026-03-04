@@ -1,5 +1,4 @@
-package nl.craftsmen.connect4
-
+package connect.four
 
 class Game(val gameRules: GameRules) {
     val board = Board(rows = gameRules.rows, cols = gameRules.cols)

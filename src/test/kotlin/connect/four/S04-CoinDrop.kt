@@ -1,14 +1,9 @@
-package connect4.connect4
+package connect.four
 
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import nl.craftsmen.connect4.Board
-import nl.craftsmen.connect4.Cell
-import nl.craftsmen.connect4.DropResult
-import nl.craftsmen.connect4.Player
-import nl.craftsmen.connect4.Position
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -40,6 +35,7 @@ class CoinDrop {
         assertEquals(Cell.PLAYER1, board.getAt(Position(row = row, column = column)))
     }
 
+    @Suppress("UnusedParameter")
     @Given("column {int} is completely full with {int} coins stacked from row {int} to row {int}")
     fun columnIsCompletelyFullWithCoinsStackedFromRowToRow(column: Int, coins: Int, rowFrom: Int, rowTo: Int) {
         board = Board(rows = 6, cols = 7)
@@ -66,6 +62,7 @@ class CoinDrop {
         assertEquals(DropResult.Failure(message), dropResult)
     }
 
+    @Suppress("UnusedParameter", "ForbiddenComment")
     @And("Player {int} is re-prompted to select a different column")
     fun playerIsRepromptedToSelectADifferentColumn(player: Int) {
         //TODO: crossing UI boundary sorta, we will have to adjust the test structure to verify this.
