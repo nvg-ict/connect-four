@@ -54,6 +54,8 @@ class PlayerInput {
 
     @And("Player {int} is re-prompted to select a valid column \\(1-7)")
     fun playerIsRepromptedToSelectAValidColumn(player: Int) {
-        TODO("Implement step")
+        val expectedPlayer = if (player == 1) Player.P1 else Player.P2
+
+        assertEquals(expectedPlayer, game.currentPlayer)
     }
 }
