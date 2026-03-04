@@ -1,7 +1,8 @@
 package nl.craftsmen.connect4
 
 class TurnController(
-    private val validator: ColumnInputValidator,
+    private val game: Game,
+    private val validator: ColumnInputValidator = ColumnInputValidator(game.gameRules.validColumns),
     private val onAcceptedMove: (column: Int) -> Unit
 ) {
     fun handleInput(raw: String): MoveResult =
@@ -14,14 +15,17 @@ class TurnController(
         }
 }
 
-class ColumnInputValidator(private val min: Int = 1, private val max: Int = 7) {
+class ColumnInputValidator(private val validRange: IntRange) {
     fun validate(raw: String): MoveResult {
         val col = raw.trim().toIntOrNull()
-            ?: return MoveResult.Rejected("Invalid input. Choose a column ($min-$max).")
+            ?: return MoveResult.Rejected("Invalid input. Choose a column ${validRange.display()}.")
 
-        return if (col in min..max) MoveResult.Accepted(col)
-        else MoveResult.Rejected("Invalid column. Choose a column ($min-$max).")
+        return if (col in validRange) MoveResult.Accepted(col)
+         else MoveResult.Rejected("Invalid column. Choose a column ${validRange.display()}.")
     }
+
+    private fun IntRange.display(): String =
+        "(${this.first}-${this.last})"
 }
 
 sealed interface MoveResult {

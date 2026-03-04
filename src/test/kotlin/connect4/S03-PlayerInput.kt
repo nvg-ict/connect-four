@@ -25,7 +25,7 @@ class PlayerInput {
     fun itIsPlayersTurn(player: Int) {
         rules = GameRules()
         game = Game(rules)
-        controller = TurnController(ColumnInputValidator()) { col ->
+        controller = TurnController(game) { col ->
             processedColumn = col
         }
         game.currentPlayer = if(player == 1) Player.P1 else Player.P2
