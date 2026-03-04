@@ -1,0 +1,54 @@
+package connect4.connect4
+
+import io.cucumber.java.en.And
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
+
+class CoinDrop {
+
+    @Given("the board is empty")
+    fun theBoardIsEmpty() {
+        TODO("Implement step")
+    }
+
+    @When("Player {int} drops a coin in column {int}")
+    fun playerDropsACoinInColumn(player: Int, column: Int) {
+        TODO("Implement step")
+    }
+
+    @Then("the coin lands in row {int} of column {int}")
+    fun theCoinLandsInRowOfColumn(row: Int, column: Int) {
+        TODO("Implement step")
+    }
+
+    @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
+    fun thePositionRecordsAYellowCoinAtCoordinates(coin: String, row: Int, column: Int) {
+        TODO("Implement step")
+    }
+
+    @Given("column {int} is completely full with {int} coins stacked from row {int} to row {int}")
+    fun columnIsCompletelyFullWithCoinsStackedFromRowToRow(column: Int, coins: Int, rowFrom: Int, rowTo: Int) {
+        TODO("Implement step")
+    }
+
+    @When("Player {int} attempts to drop a coin in column {int}")
+    fun playerAttemptsToDropACoinInColumn(player: Int, column: Int) {
+        TODO("Implement step")
+    }
+
+    @Then("the move is rejected")
+    fun theMoveIsRejected() {
+        TODO("Implement step")
+    }
+
+    @Then("an error message states {string}")
+    fun anErrorMessageStates(message: String) {
+        TODO("Implement step")
+    }
+
+    @And("Player {int} is re-prompted to select a different column")
+    fun playerIsRepromptedToSelectADifferentColumn(player: Int) {
+        TODO("Implement step")
+    }
+}
