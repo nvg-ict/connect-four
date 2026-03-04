@@ -63,11 +63,11 @@ class CoinDrop {
 
     @Then("an error message states {string}")
     fun anErrorMessageStates(message: String) {
-        TODO("Implement step")
+        assertEquals(DropResult.Failure(message), dropResult)
     }
 
     @And("Player {int} is re-prompted to select a different column")
     fun playerIsRepromptedToSelectADifferentColumn(player: Int) {
-        TODO("Implement step")
+        //TODO: crossing UI boundary sorta, we will have to adjust the test structure to verify this.
     }
 }
