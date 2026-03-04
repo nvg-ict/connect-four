@@ -9,6 +9,7 @@ class Game(val gameRules: GameRules) {
         return "${currentPlayer.label}'s turn"
     }
 
+    @Suppress("UnusedParameter")
     fun applyMove(column: Int) {
         currentPlayer = currentPlayer.other()
     }

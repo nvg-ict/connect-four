@@ -19,10 +19,12 @@ class AlternatePlayers {
         // Nothing for now
     }
 
-    @Then("the game indicates {string} \\(🟡)")
-    fun theGameIndicatesPlayer1Turn(message: String) {
+    @Then("the game indicates {string} for Player {int}")
+    fun theGameIndicatesPlayer1Turn(message: String, player: Int) {
+        val currentPlayer = if (player == 1) Player.P1 else Player.P2
+
         assertEquals(message, game.turnIndicator())
-        assertEquals(Player.P1, game.currentPlayer)
+        assertEquals(currentPlayer, game.currentPlayer)
     }
 
     @And("Player {int} drops a coin in {int}")
@@ -32,17 +34,5 @@ class AlternatePlayers {
         assertEquals(currentPlayer, game.currentPlayer)
 
         game.applyMove(column)
-    }
-
-    @And("the game indicates {string} \\(🔴)")
-    fun theGameIndicatesPlayer2Turn(message: String) {
-        assertEquals(message, game.turnIndicator())
-        assertEquals(Player.P2, game.currentPlayer)
-    }
-
-    @Then("the game again indicates {string} \\(🟡)")
-    fun theGameAgainIndicatesPlayer1Turn(message: String) {
-        assertEquals(message, game.turnIndicator())
-        assertEquals(Player.P1, game.currentPlayer)
     }
 }
