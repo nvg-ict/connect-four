@@ -6,16 +6,19 @@ class Game(val gameRules: GameRules) {
     var currentPlayer: Player = Player.P1
 
     fun turnIndicator(): String {
-        return "Player 1's turn"
+        return "${currentPlayer.label}'s turn"
     }
 
     fun applyMove(column: Int) {
-
+        currentPlayer = currentPlayer.other()
     }
 }
 
-enum class Player {
-    P1, P2
+enum class Player(val label: String) {
+    P1("Player 1"),
+    P2( "Player 2");
+
+    fun other(): Player = if (this == P1) P2 else P1
 }
 
 data class GameRules(val rows: Int = 6, val cols: Int = 7) {

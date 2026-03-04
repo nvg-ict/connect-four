@@ -36,7 +36,8 @@ class AlternatePlayers {
 
     @And("the game indicates {string} \\(🔴)")
     fun theGameIndicatesPlayer2Turn(message: String) {
-        TODO("Implement step")
+        assertEquals(message, game.turnIndicator())
+        assertEquals(Player.P2, game.currentPlayer)
     }
 
     @Then("the game again indicates {string} \\(🟡)")
