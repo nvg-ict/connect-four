@@ -10,6 +10,15 @@ class Board(val rows: Int, val cols: Int) {
     fun getAt(position: Position): Cell {
         return grid[position.rowIndex][position.columnIndex]
     }
+
+    fun dropInColumn(column: Int, cell: Cell) {
+        for (row in 1..rows) {
+            if (getAt(Position(column, row)) == Cell.EMPTY) {
+                setAt(Position(column, row), cell)
+            }
+        }
+        error("Column $column is full")
+    }
 }
 
 enum class Cell(
@@ -22,6 +31,7 @@ enum class Cell(
 
     companion object {
         fun fromId(id: Int): Cell? = entries.find { it.id == id }
+        fun forPlayer(p: Player): Cell = if (p == Player.P1) PLAYER1 else PLAYER2
     }
 }
 

@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import nl.craftsmen.connect4.Board
 import nl.craftsmen.connect4.Cell
+import nl.craftsmen.connect4.Player
 import nl.craftsmen.connect4.Position
 import kotlin.test.assertEquals
 
@@ -24,7 +25,10 @@ class CoinDrop {
 
     @When("Player {int} drops a coin in column {int}")
     fun playerDropsACoinInColumn(player: Int, column: Int) {
-        TODO("Implement step")
+        val currentPlayer = if(player == 1) Player.P1 else Player.P2
+        val cell = Cell.forPlayer(currentPlayer)
+
+        board.dropInColumn(column, cell)
     }
 
     @Then("the coin lands in row {int} of column {int}")
