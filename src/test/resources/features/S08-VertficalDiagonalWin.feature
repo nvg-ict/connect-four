@@ -1,6 +1,7 @@
 Feature: Vertical and Diagonal Win
 
   Scenario: Player 2 wins with 4 consecutive coins stacked vertically
+    #Edited this story line to make more sense!
     Given column 4 has 3 red coins (🔴) stacked consecutively from row 1 to row 3
     When Player 2 drops a final coin in column 4
     Then the game detects a vertical win for Player 2

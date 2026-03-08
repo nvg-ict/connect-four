@@ -17,6 +17,8 @@ import kotlin.test.assertEquals
 class WinDetectionSteps {
     private lateinit var game: Game
     private lateinit var gameMoveResult: GameMoveResult
+    private lateinit var finalMove: Map<String, String>
+
 
     @Given("column {int} has {int} red coins \\(🔴\\) stacked consecutively from row {int} to row {int}")
     fun columnHasRedCoinsStacked(column: Int, coins: Int, rowFrom: Int, rowTo: Int) {
@@ -55,12 +57,21 @@ class WinDetectionSteps {
 
     @Given("the board has {int} yellow coins \\(🟡\\) on an upward-right diagonal")
     fun boardHasYellowCoinsOnDiagonal(coins: Int) {
-        TODO("Implement step")
+        game = Game(GameRules())
     }
 
     @And("the coordinates are:")
     fun theCoordinatesAre(table: DataTable) {
-        TODO("Implement step")
+        val coordinates = table.asMaps()
+
+        val setupCoordinates = coordinates.dropLast(1)
+        finalMove = coordinates.last()
+
+        setupCoordinates.forEach {
+            val row = it["row"]!!.toInt()
+            val col = it["col"]!!.toInt()
+            game.board.setAt(Position(col, row), Cell.PLAYER1)
+        }
     }
 
     @When("Player {int} drops a final coin completing the diagonal")
