@@ -11,6 +11,7 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.jupiter.api.Assertions.assertTrue
 import kotlin.test.assertEquals
 
 class WinDetectionSteps {
@@ -49,7 +50,7 @@ class WinDetectionSteps {
 
     @And("the game ends immediately")
     fun theGameEndsImmediately() {
-        TODO("Implement step")
+        assertTrue(gameMoveResult is GameMoveResult.Win)
     }
 
     @Given("the board has {int} yellow coins \\(🟡\\) on an upward-right diagonal")
