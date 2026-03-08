@@ -1,11 +1,14 @@
 package connect.four.cucumber
 
 import connect.four.App
+import connect.four.BoardRenderer
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.assertNotNull
+import kotlin.test.assertEquals
 
 class GameStart {
     private lateinit var app: App
@@ -64,6 +67,12 @@ class GameStart {
 
     @And("upon pressing that key, the game begins with a fresh board")
     fun uponPressingThatKeyTheGameBeginsWithAFreshBoard() {
-        TODO("Implement step")
+        app.startGame()
+
+        assertNotNull(app.game)
+        val output = BoardRenderer().render(app.game!!.board)
+
+        val count = output.count { it.toString() == "⚪" }
+        assertEquals(42, count)
     }
 }

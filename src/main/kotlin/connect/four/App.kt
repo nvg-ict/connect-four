@@ -1,6 +1,11 @@
 package connect.four
 
-class App {
+class App(
+    private val gameRules: GameRules = GameRules()
+) {
+    var game: Game? = null
+        private set
+
     fun startupMessage(): String = """
         Welcome to Connect Four!
 
@@ -12,4 +17,9 @@ class App {
         - The game is a draw when the board is full and nobody has won.
         
         Press any key to start the game.
-    """.trimIndent()}
+    """.trimIndent()
+
+    fun startGame() {
+        game = Game(gameRules)
+    }
+}
