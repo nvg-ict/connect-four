@@ -1,5 +1,9 @@
 package connect.four.cucumber
 
+import connect.four.Cell
+import connect.four.Game
+import connect.four.GameRules
+import connect.four.Position
 import io.cucumber.datatable.DataTable
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
@@ -7,10 +11,18 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class WinDetectionSteps {
+    private lateinit var game: Game
 
     @Given("column {int} has {int} red coins \\(🔴\\) stacked consecutively from row {int} to row {int}")
     fun columnHasRedCoinsStacked(column: Int, coins: Int, rowFrom: Int, rowTo: Int) {
-        TODO("Implement step")
+        require(rowTo - rowFrom + 1 == coins)
+
+        game = Game(GameRules())
+        val range = IntRange(rowFrom, rowTo)
+
+        for (row in range) {
+            game.board.setAt(Position(column, row), Cell.PLAYER2)
+        }
     }
 
     @When("Player {int} drops a final coin in column {int}")
