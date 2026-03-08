@@ -44,6 +44,6 @@ class GameEnd {
 
     @Then("the message {string} is displayed")
     fun theMessageIsDisplayed(expected: String) {
-        TODO("Implement step")
+        assertEquals(expected, game.turnIndicator())
     }
 }

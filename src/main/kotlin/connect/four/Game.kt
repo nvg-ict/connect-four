@@ -7,12 +7,18 @@ class Game(
     val board = Board(rows = gameRules.rows, cols = gameRules.cols)
     var currentPlayer: Player = Player.P1
 
+    private var lastMoveResult: GameMoveResult? = null
+
     fun turnIndicator(): String {
-        return if(board.isFull()) "Game is a Draw" else "${currentPlayer.label}'s turn"
+        return when (val result = lastMoveResult) {
+            is GameMoveResult.Win -> "${result.player.label} wins with 4 in a row!"
+            GameMoveResult.Draw -> "Game is a Draw"
+            else -> "${currentPlayer.label}'s turn"
+        }
     }
 
     fun applyMove(column: Int): GameMoveResult {
-        return when (val drop = board.dropInColumn(column, Cell.forPlayer(currentPlayer))) {
+        val result = when (val drop = board.dropInColumn(column, Cell.forPlayer(currentPlayer))) {
             is DropResult.Failure ->
                 GameMoveResult.Failure(drop.errorMessage)
 
@@ -37,6 +43,9 @@ class Game(
                 }
             }
         }
+
+        lastMoveResult = result
+        return result
     }
 }
 
