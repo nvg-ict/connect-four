@@ -5,10 +5,11 @@ import org.junit.platform.suite.api.Suite
 
 import io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME
 import io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME
+import org.junit.platform.suite.api.SelectPackages
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features")
+@SelectPackages("features")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "connect.four")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 class RunCucumberTest
