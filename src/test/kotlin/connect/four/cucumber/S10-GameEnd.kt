@@ -1,5 +1,6 @@
 package connect.four.cucumber
 
+import connect.four.BoardRenderer
 import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
@@ -7,6 +8,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions.assertTrue
+import kotlin.test.assertEquals
 
 class GameEnd {
     private lateinit var game: Game
@@ -34,7 +36,10 @@ class GameEnd {
 
     @Then("the final board is displayed with the winning coins marked with brackets like {string}")
     fun theFinalBoardHasWinningCoinsMarked(example: String) {
-        TODO("Implement step")
+        val renderer = BoardRenderer()
+        val result = renderer.render(game.board)
+
+        assertTrue(result.contains(example))
     }
 
     @Then("the message {string} is displayed")

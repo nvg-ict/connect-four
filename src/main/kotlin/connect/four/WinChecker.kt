@@ -3,6 +3,10 @@ package connect.four
 class WinChecker {
     @Suppress("MagicNumber")
     fun isWin(board: Board, origin: Position, player: Player): Boolean {
+        return findWinningPositions(board, origin, player).isNotEmpty()
+    }
+
+    fun findWinningPositions(board: Board, origin: Position, player: Player): List<Position> {
         val directions = listOf(
             1 to 0,
             0 to 1,
@@ -10,28 +14,32 @@ class WinChecker {
             1 to -1
         )
 
-        return directions.any { (columnStep, rowStep) ->
-            connectedCoinCount(board, origin, player, columnStep, rowStep) >= 4
-        }
+        return directions.firstNotNullOfOrNull { (columnStep, rowStep) ->
+            val winningLine = connectedPositions(board, origin, player, columnStep, rowStep)
+            if (winningLine.size >= 4) winningLine else null
+        } ?: emptyList()
     }
 
-    private fun connectedCoinCount(
+    private fun connectedPositions(
         board: Board,
         origin: Position,
         player: Player,
         columnStep: Int,
         rowStep: Int
-    ): Int =
-        countConsecutiveCoins(board, origin, player, columnStep, rowStep) +
-                countConsecutiveCoins(board, origin, player, -columnStep, -rowStep) + 1
+    ): List<Position> {
+        val backward = consecutivePositions(board, origin, player, -columnStep, -rowStep).reversed()
+        val forward = consecutivePositions(board, origin, player, columnStep, rowStep)
 
-    private fun countConsecutiveCoins(
+        return backward + origin + forward
+    }
+
+    private fun consecutivePositions(
         board: Board,
         origin: Position,
         player: Player,
         columnStep: Int,
         rowStep: Int
-    ): Int {
+    ): List<Position> {
         val target = Cell.forPlayer(player)
 
         return generateSequence(Position(origin.column + columnStep, origin.row + rowStep)) {
@@ -42,6 +50,6 @@ class WinChecker {
                         it.row in 1..board.rows &&
                         board.getAt(it) == target
             }
-            .count()
+            .toList()
     }
 }

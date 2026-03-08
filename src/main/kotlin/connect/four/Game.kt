@@ -12,7 +12,7 @@ class Game(
     }
 
     fun applyMove(column: Int): GameMoveResult {
-        val result = when (val drop = board.dropInColumn(column, Cell.forPlayer(currentPlayer))) {
+        return when (val drop = board.dropInColumn(column, Cell.forPlayer(currentPlayer))) {
             is DropResult.Failure ->
                 GameMoveResult.Failure(drop.errorMessage)
 
@@ -20,8 +20,12 @@ class Game(
                 val position = drop.position
 
                 when {
-                    winChecker.isWin(board, position, currentPlayer) ->
+                    winChecker.isWin(board, position, currentPlayer) -> {
+                        val winningPositions =
+                            winChecker.findWinningPositions(board, position, currentPlayer)
+                        board.markWinning(winningPositions)
                         GameMoveResult.Win(currentPlayer)
+                    }
 
                     board.isFull() ->
                         GameMoveResult.Draw
@@ -33,8 +37,6 @@ class Game(
                 }
             }
         }
-
-        return result
     }
 }
 

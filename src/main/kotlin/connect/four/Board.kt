@@ -26,6 +26,13 @@ class Board(val rows: Int, val cols: Int) {
         (1..cols).all { column ->
             getAt(Position(column, rows)) != Cell.EMPTY
         }
+
+    fun markWinning(positions: List<Position>) {
+        positions.forEach { position ->
+            val current = getAt(position)
+            setAt(position, current.copy(isWinning = true))
+        }
+    }
 }
 
 sealed interface DropResult {
@@ -33,7 +40,23 @@ sealed interface DropResult {
     data class Failure(val errorMessage: String) : DropResult
 }
 
-enum class Cell(
+data class Cell(
+    val type: CellType,
+    val isWinning: Boolean = false
+) {
+    val value get() = type.value
+
+    companion object {
+        val EMPTY = Cell(CellType.EMPTY)
+        val PLAYER1 = Cell(CellType.PLAYER1)
+        val PLAYER2 = Cell(CellType.PLAYER2)
+
+        fun fromId(id: Int): Cell? = CellType.fromId(id)?.let(::Cell)
+        fun forPlayer(p: Player): Cell = Cell(CellType.forPlayer(p))
+    }
+}
+
+enum class CellType(
     val value: String,
     val id: Int? = null
 ) {
@@ -42,8 +65,9 @@ enum class Cell(
     PLAYER2("🔴", 2);
 
     companion object {
-        fun fromId(id: Int): Cell? = entries.find { it.id == id }
-        fun forPlayer(p: Player): Cell = if (p == Player.P1) PLAYER1 else PLAYER2
+        fun fromId(id: Int): CellType? = entries.find { it.id == id }
+        fun forPlayer(p: Player): CellType =
+            if (p == Player.P1) PLAYER1 else PLAYER2
     }
 }
 

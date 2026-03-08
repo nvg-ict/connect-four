@@ -11,8 +11,19 @@ class BoardRenderer {
             append(row)
             append(' ')
             val line = (1..board.cols)
-                .joinToString("") { col -> board.getAt(Position(col, row)).value }
+                .joinToString("") { col ->
+                    val cell = board.getAt(Position(col, row))
+                    renderCell(cell)
+                }
             appendLine(line)
         }
     }.removeSuffix("\n").trimEnd()
+
+    private fun renderCell(cell: Cell): String {
+        return if (cell.isWinning) {
+            "[${cell.value}]"
+        } else {
+            cell.value
+        }
+    }
 }

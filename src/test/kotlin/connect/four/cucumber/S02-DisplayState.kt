@@ -25,7 +25,7 @@ class DisplayState {
 
     @Given("column {int} row {int} contains a Player {int} coin")
     fun columnRowContainsAPlayerCoin(column: Int, row: Int, player: Int) {
-        game.board.setAt(Position(column, row), Cell.Companion.fromId(player) ?: Cell.EMPTY)
+        game.board.setAt(Position(column, row), Cell.fromId(player) ?: Cell.EMPTY)
     }
 
     @When("the board state is displayed")
