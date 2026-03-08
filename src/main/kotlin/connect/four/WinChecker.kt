@@ -39,33 +39,9 @@ class WinChecker {
                 diagonalUpDownWin(board, position, player)
     }
 
-    private fun diagonalDownUpWin(board: Board, position: Position, player: Player): Boolean {
-        val target = Cell.forPlayer(player)
-        val row = position.row
-        val col = position.column
-
-        val downLeft = generateSequence(Position(col - 1, row - 1)) {
-            Position(it.column - 1, it.row - 1)
-        }
-            .takeWhile {
-                it.column >= 1 &&
-                        it.row >= 1 &&
-                        board.getAt(it) == target
-            }
-            .count()
-
-        val upRight = generateSequence(Position(col + 1, row + 1)) {
-            Position(it.column + 1, it.row + 1)
-        }
-            .takeWhile {
-                it.column <= board.cols &&
-                        it.row <= board.rows &&
-                        board.getAt(it) == target
-            }
-            .count()
-
-        return downLeft + upRight + 1 >= 4
-    }
+    private fun diagonalDownUpWin(board: Board, position: Position, player: Player): Boolean =
+        count(board, position, player, -1, -1) +
+                count(board, position, player, 1, 1) + 1 >= 4
 
     private fun diagonalUpDownWin(board: Board, position: Position, player: Player): Boolean {
         val target = Cell.forPlayer(player)
