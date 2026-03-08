@@ -1,7 +1,7 @@
 package connect.four
 
 class WinChecker {
-    fun isWin(board: Board, position: Position, player: Player): Boolean {
+    fun isWin(board: Board, origin: Position, player: Player): Boolean {
         val directions = listOf(
             1 to 0,
             0 to 1,
@@ -10,21 +10,30 @@ class WinChecker {
         )
 
         return directions.any { (columnStep, rowStep) ->
-            count(board, position, player, columnStep, rowStep) +
-                    count(board, position, player, -columnStep, -rowStep) + 1 >= 4
+            connectedCoinCount(board, origin, player, columnStep, rowStep) >= 4
         }
     }
 
-    private fun count(
+    private fun connectedCoinCount(
         board: Board,
-        start: Position,
+        origin: Position,
+        player: Player,
+        columnStep: Int,
+        rowStep: Int
+    ): Int =
+        countConsecutiveCoins(board, origin, player, columnStep, rowStep) +
+                countConsecutiveCoins(board, origin, player, -columnStep, -rowStep) + 1
+
+    private fun countConsecutiveCoins(
+        board: Board,
+        origin: Position,
         player: Player,
         columnStep: Int,
         rowStep: Int
     ): Int {
         val target = Cell.forPlayer(player)
 
-        return generateSequence(Position(start.column + columnStep, start.row + rowStep)) {
+        return generateSequence(Position(origin.column + columnStep, origin.row + rowStep)) {
             Position(it.column + columnStep, it.row + rowStep)
         }
             .takeWhile {
