@@ -26,13 +26,21 @@ class WinChecker {
             .count()
     }
 
+    private fun lineCount(
+        board: Board,
+        position: Position,
+        player: Player,
+        columnStep: Int,
+        rowStep: Int
+    ): Int =
+        count(board, position, player, columnStep, rowStep) +
+                count(board, position, player, -columnStep, -rowStep) + 1
+
     fun horizontalWin(board: Board, position: Position, player: Player): Boolean =
-        count(board, position, player, -1, 0) +
-                count(board, position, player, 1, 0) + 1 >= 4
+        lineCount(board, position, player, 1, 0) >= 4
 
     fun verticalWin(board: Board, position: Position, player: Player): Boolean =
-        count(board, position, player, 0, -1) +
-                count(board, position, player, 0, 1) + 1 >= 4
+        lineCount(board, position, player, 0, 1) >= 4
 
     fun diagonalWin(board: Board, position: Position, player: Player): Boolean {
         return diagonalDownUpWin(board, position, player) ||
@@ -40,10 +48,8 @@ class WinChecker {
     }
 
     private fun diagonalDownUpWin(board: Board, position: Position, player: Player): Boolean =
-        count(board, position, player, -1, -1) +
-                count(board, position, player, 1, 1) + 1 >= 4
+        lineCount(board, position, player, 1, 1) >= 4
 
     private fun diagonalUpDownWin(board: Board, position: Position, player: Player): Boolean =
-        count(board, position, player, -1, 1) +
-                count(board, position, player, 1, -1) + 1 >= 4
+        lineCount(board, position, player, 1, -1) >= 4
 }
