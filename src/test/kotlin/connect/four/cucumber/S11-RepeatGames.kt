@@ -1,6 +1,7 @@
 package connect.four.cucumber
 
 import connect.four.App
+import connect.four.BoardRenderer
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -39,8 +40,10 @@ class RepeatGames {
 
     @Then("the board is cleared to all empty positions \\({string}\\)")
     fun theBoardIsClearedToAllEmptyPositions(symbol: String) {
-        TODO("Implement step")
-    }
+        val output = BoardRenderer().render(app.game!!.board)
+
+        val count = output.count { it.toString() == "⚪" }
+        assertEquals(42, count)    }
 
     @And("a new game begins with Player {int}'s turn")
     fun aNewGameBeginsWithPlayersTurn(player: Int) {

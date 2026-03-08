@@ -24,5 +24,9 @@ class App(
     }
 
     fun playAgainMessage(): String = "Play again? (yes/no)"
-    fun handlePlayAgainSelection(selection: String) {}
-}
+
+    fun handlePlayAgainSelection(selection: String) {
+        if (selection.equals("yes", ignoreCase = true)) {
+            startGame()
+        }
+    }}
