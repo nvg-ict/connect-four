@@ -5,15 +5,23 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class HorizontalWin {
-    @Given("the board has {int} consecutive yellow coins {string} in row {int}, columns {int}-{int}")
+    private lateinit var game: Game
+    private lateinit var expectedCoin: String
+
+    @Given("the board has {int} consecutive coins {string} in row 1, columns {int}-{int}")
     fun aGameWithCoinsGetsInitialized(
         count: Int,
         coin: String,
-        row: Int,
         columnFrom: Int,
         columnTo: Int
     ) {
-        TODO("Implement step to initialize game")
+        game = Game(GameRules())
+        expectedCoin = coin
+        val range = IntRange(columnFrom, columnTo)
+
+        for (column in range) {
+            game.board.dropInColumn(column, Cell.PLAYER1)
+        }
     }
 
     @When("Player {int} drops a final coin completing the 4-in-a-row")
