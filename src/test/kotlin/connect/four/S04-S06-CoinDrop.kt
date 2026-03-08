@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
 
 class CoinDrop {
     private lateinit var game: Game
-    private lateinit var dropResult: DropResult
+    private lateinit var gameMoveResult: GameMoveResult
 
     @Given("the board is empty")
     fun theBoardIsEmpty() {
@@ -19,12 +19,12 @@ class CoinDrop {
     @Suppress("UnusedParameter")
     @When("Player {int} drops a coin in column {int}")
     fun playerDropsACoinInColumn(player: Int, column: Int) {
-         dropResult = game.applyMove(column)
+         gameMoveResult = game.applyMove(column)
     }
 
     @Then("the coin lands in row {int} of column {int}")
     fun theCoinLandsInRowOfColumn(row: Int, column: Int) {
-        assertEquals(DropResult.Success(Position(column, row)),dropResult)
+        assertEquals(GameMoveResult.Success(Position(column, row)),gameMoveResult)
     }
 
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
@@ -52,17 +52,17 @@ class CoinDrop {
     @When("Player {int} attempts to drop a coin in column {int}")
     fun playerAttemptsToDropACoinInColumn(player: Int, column: Int) {
         assertEquals("Player ${player}'s turn",game.turnIndicator())
-        dropResult = game.applyMove(column)
+        gameMoveResult = game.applyMove(column)
     }
 
     @Then("the move is rejected")
     fun theMoveIsRejected() {
-        assertTrue(dropResult is DropResult.Failure)
+        assertTrue(gameMoveResult is GameMoveResult.Failure)
     }
 
     @Then("an error message states {string}")
     fun anErrorMessageStates(message: String) {
-        assertEquals(DropResult.Failure(message), dropResult)
+        assertEquals(GameMoveResult.Failure(message), gameMoveResult)
     }
 
     @And("Player {int} is re-prompted to select a different column")

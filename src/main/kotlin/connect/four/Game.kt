@@ -1,6 +1,8 @@
 package connect.four
 
-class Game(val gameRules: GameRules) {
+class Game(val gameRules: GameRules,
+           private val winChecker: WinChecker = WinChecker()
+) {
     val board = Board(rows = gameRules.rows, cols = gameRules.cols)
     var currentPlayer: Player = Player.P1
 
@@ -8,10 +10,49 @@ class Game(val gameRules: GameRules) {
         return "${currentPlayer.label}'s turn"
     }
 
-    fun applyMove(column: Int): DropResult =
-        board.dropInColumn(column, Cell.forPlayer(currentPlayer)).also {
-            if (it is DropResult.Success) currentPlayer = currentPlayer.other()
+    fun applyMove(column: Int): GameMoveResult {
+        val result = when (val drop = board.dropInColumn(column, Cell.forPlayer(currentPlayer))) {
+            is DropResult.Failure ->
+                GameMoveResult.Failure(drop.errorMessage)
+
+            is DropResult.Success -> {
+                val position = drop.position
+
+                if (winChecker.horizontalWin(board, position, currentPlayer)) {
+                    GameMoveResult.Win(currentPlayer)
+                } else {
+                    currentPlayer = currentPlayer.other()
+                    GameMoveResult.Success(position)
+                }
+            }
         }
+
+        return result
+    }
+}
+
+sealed class GameMoveResult {
+    data class Success(val position: Position) : GameMoveResult()
+    data class Win(val player: Player) : GameMoveResult()
+    data class Failure(val reason: String) : GameMoveResult()
+}
+
+class WinChecker {
+    fun horizontalWin(board: Board, position: Position, player: Player): Boolean {
+        val target = Cell.forPlayer(player)
+        val row = position.row
+        val col = position.column
+
+        val left = generateSequence(col - 1) { it - 1 }
+            .takeWhile { it >= 1 && board.getAt(Position(it, row)) == target }
+            .count()
+
+        val right = generateSequence(col + 1) { it + 1 }
+            .takeWhile { it <= board.cols && board.getAt(Position(it, row)) == target }
+            .count()
+
+        return left + right + 1 >= 4
+    }
 }
 
 enum class Player(val label: String) {

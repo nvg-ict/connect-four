@@ -7,6 +7,8 @@ import io.cucumber.java.en.When
 class HorizontalWin {
     private lateinit var game: Game
     private lateinit var expectedCoin: String
+    private lateinit var expectedWinningPlayer: Player
+    private lateinit var gameMoveResult: GameMoveResult
 
     @Given("the board has {int} consecutive coins {string} in row 1, columns {int}-{int}")
     fun aGameWithCoinsGetsInitialized(
@@ -24,9 +26,11 @@ class HorizontalWin {
         }
     }
 
-    @When("Player {int} drops a final coin completing the 4-in-a-row")
-    fun playerDropsWinningCoin(player: Int) {
-        TODO("Implement step to drop winning coin")
+    @When("Player {int} drops a final coin completing the 4-in-a-row \\(column {int})")
+    fun playerDropsWinningCoin(player: Int, column: Int) {
+        expectedWinningPlayer = if (player == 1) Player.P1 else Player.P2
+
+        gameMoveResult = game.applyMove(column)
     }
 
     @Then("the game detects a horizontal win for Player {int} the game ends immediately")
