@@ -1,7 +1,7 @@
 Feature: Draw
 
   Scenario: Game ends in draw when board is full with no winner
-    Given all 42 board positions are filled with alternating yellow and red coins
+    Given all 42 board positions are filled with alternating yellow and red coins except for top of column 7
     And no 4-in-a-row exists for either player
     When Player 1 attempts to make a move and finds all columns full
     Then the game declares "Game is a Draw"

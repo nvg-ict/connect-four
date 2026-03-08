@@ -19,11 +19,17 @@ class Game(
             is DropResult.Success -> {
                 val position = drop.position
 
-                if (winChecker.isWin(board, position, currentPlayer)) {
-                    GameMoveResult.Win(currentPlayer)
-                } else {
-                    currentPlayer = currentPlayer.other()
-                    GameMoveResult.Success(position)
+                when {
+                    winChecker.isWin(board, position, currentPlayer) ->
+                        GameMoveResult.Win(currentPlayer)
+
+                    board.isFull() ->
+                        GameMoveResult.Draw
+
+                    else -> {
+                        currentPlayer = currentPlayer.other()
+                        GameMoveResult.Success(position)
+                    }
                 }
             }
         }
@@ -35,6 +41,7 @@ class Game(
 sealed class GameMoveResult {
     data class Success(val position: Position) : GameMoveResult()
     data class Win(val player: Player) : GameMoveResult()
+    object Draw : GameMoveResult()
     data class Failure(val reason: String) : GameMoveResult()
 }
 
