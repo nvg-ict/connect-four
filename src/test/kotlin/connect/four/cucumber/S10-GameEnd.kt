@@ -1,13 +1,16 @@
 package connect.four.cucumber
 
 import connect.four.Game
+import connect.four.GameMoveResult
 import connect.four.GameRules
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.jupiter.api.Assertions.assertTrue
 
 class GameEnd {
     private lateinit var game: Game
+    private lateinit var gameMoveResult: GameMoveResult
 
     @Given("Player {int} has just completed 4-in-a-row")
     fun playerHasJustCompletedInARow(player: Int) {
@@ -20,13 +23,13 @@ class GameEnd {
         }
 
         moves.forEach { column ->
-            game.applyMove(column)
+            gameMoveResult = game.applyMove(column)
         }
     }
 
     @When("the game ends")
     fun theGameEnds() {
-        TODO("Implement step")
+        assertTrue(gameMoveResult is GameMoveResult.Win)
     }
 
     @Then("the final board is displayed with the winning coins marked with brackets like {string}")
