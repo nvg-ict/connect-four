@@ -34,7 +34,7 @@ class RepeatGames {
 
     @And("the player selects {string}")
     fun thePlayerSelects(choice: String) {
-        TODO("Implement step")
+        app.handlePlayAgainSelection(choice)
     }
 
     @Then("the board is cleared to all empty positions \\({string}\\)")

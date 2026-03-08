@@ -24,4 +24,5 @@ class App(
     }
 
     fun playAgainMessage(): String = "Play again? (yes/no)"
+    fun handlePlayAgainSelection(selection: String) {}
 }
