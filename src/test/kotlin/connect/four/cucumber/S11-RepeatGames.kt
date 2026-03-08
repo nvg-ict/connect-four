@@ -5,9 +5,11 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import kotlin.test.assertEquals
 
 class RepeatGames {
     private lateinit var app: App
+    private var displayedMessage: String = ""
 
     @Given("a game has ended with a winner")
     fun aGameHasEndedWithAWinner() {
@@ -26,7 +28,8 @@ class RepeatGames {
 
     @When("the game displays {string}")
     fun theGameDisplays(message: String) {
-        TODO("Implement step")
+        displayedMessage = app.playAgainMessage()
+        assertEquals(message, displayedMessage)
     }
 
     @And("the player selects {string}")

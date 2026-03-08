@@ -22,4 +22,6 @@ class App(
     fun startGame() {
         game = Game(gameRules)
     }
+
+    fun playAgainMessage(): String = "Play again? (yes/no)"
 }
