@@ -1,6 +1,7 @@
 package connect.four
 
 class WinChecker {
+    @Suppress("MagicNumber")
     fun isWin(board: Board, origin: Position, player: Player): Boolean {
         val directions = listOf(
             1 to 0,

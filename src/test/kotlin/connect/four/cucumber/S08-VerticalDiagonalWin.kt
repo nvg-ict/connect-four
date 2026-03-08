@@ -56,6 +56,7 @@ class WinDetectionSteps {
         assertTrue(gameMoveResult is GameMoveResult.Win)
     }
 
+    @Suppress("UnusedParameter")
     @Given("the board has {int} yellow coins \\(🟡\\) on an upward-right diagonal")
     fun boardHasYellowCoinsOnDiagonal(coins: Int) {
         game = Game(GameRules())
