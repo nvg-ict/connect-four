@@ -1,21 +1,34 @@
 package connect.four
 
 class WinChecker {
-    fun horizontalWin(board: Board, position: Position, player: Player): Boolean {
+    fun isWin(board: Board, position: Position, player: Player): Boolean =
+        horizontalWin(board, position, player) ||
+                verticalWin(board, position, player) ||
+                diagonalWin(board, position, player)
+
+    private fun count(
+        board: Board,
+        start: Position,
+        player: Player,
+        columnStep: Int,
+        rowStep: Int
+    ): Int {
         val target = Cell.forPlayer(player)
-        val row = position.row
-        val col = position.column
 
-        val left = generateSequence(col - 1) { it - 1 }
-            .takeWhile { it >= 1 && board.getAt(Position(it, row)) == target }
+        return generateSequence(Position(start.column + columnStep, start.row + rowStep)) {
+            Position(it.column + columnStep, it.row + rowStep)
+        }
+            .takeWhile {
+                it.column in 1..board.cols &&
+                        it.row in 1..board.rows &&
+                        board.getAt(it) == target
+            }
             .count()
-
-        val right = generateSequence(col + 1) { it + 1 }
-            .takeWhile { it <= board.cols && board.getAt(Position(it, row)) == target }
-            .count()
-
-        return left + right + 1 >= 4
     }
+
+    fun horizontalWin(board: Board, position: Position, player: Player): Boolean =
+        count(board, position, player, -1, 0) +
+                count(board, position, player, 1, 0) + 1 >= 4
 
     fun verticalWin(board: Board, position: Position, player: Player): Boolean {
         val target = Cell.forPlayer(player)
