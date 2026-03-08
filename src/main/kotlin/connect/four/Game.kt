@@ -19,7 +19,9 @@ class Game(
             is DropResult.Success -> {
                 val position = drop.position
 
-                if (winChecker.horizontalWin(board, position, currentPlayer)) {
+                if (winChecker.horizontalWin(board, position, currentPlayer) ||
+                    winChecker.verticalWin(board, position, currentPlayer)
+                    ) {
                     GameMoveResult.Win(currentPlayer)
                 } else {
                     currentPlayer = currentPlayer.other()

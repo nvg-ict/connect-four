@@ -16,4 +16,20 @@ class WinChecker {
 
         return left + right + 1 >= 4
     }
+
+    fun verticalWin(board: Board, position: Position, player: Player): Boolean {
+        val target = Cell.forPlayer(player)
+        val row = position.row
+        val col = position.column
+
+        val down = generateSequence(row - 1) { it - 1 }
+            .takeWhile { it >= 1 && board.getAt(Position(col, it)) == target }
+            .count()
+
+        val up = generateSequence(row + 1) { it + 1 }
+            .takeWhile { it <= board.rows && board.getAt(Position(col, it)) == target }
+            .count()
+
+        return down + up + 1 >= 4
+    }
 }
