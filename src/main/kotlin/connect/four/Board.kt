@@ -21,6 +21,11 @@ class Board(val rows: Int, val cols: Int) {
         }
         return DropResult.Failure("Column $column is full")
     }
+
+    fun isFull(): Boolean =
+        (1..cols).all { column ->
+            getAt(Position(column, rows)) != Cell.EMPTY
+        }
 }
 
 sealed interface DropResult {

@@ -8,7 +8,7 @@ class Game(
     var currentPlayer: Player = Player.P1
 
     fun turnIndicator(): String {
-        return "${currentPlayer.label}'s turn"
+        return if(board.isFull()) "Game is a Draw" else "${currentPlayer.label}'s turn"
     }
 
     fun applyMove(column: Int): GameMoveResult {

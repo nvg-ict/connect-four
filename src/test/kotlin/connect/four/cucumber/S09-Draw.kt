@@ -11,6 +11,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions.assertFalse
+import kotlin.test.assertEquals
 
 class Draw {
     private lateinit var game: Game
@@ -71,7 +72,7 @@ class Draw {
 
     @Then("the game declares {string}")
     fun theGameDeclares(message: String) {
-        TODO("Implement step")
+        assertEquals(message, game.turnIndicator())
     }
 
     @And("the game ends without a winner")
