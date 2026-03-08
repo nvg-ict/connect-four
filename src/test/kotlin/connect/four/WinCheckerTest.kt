@@ -1,79 +1,85 @@
 package connect.four
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class WinCheckerTest {
+
     private lateinit var board: Board
-    private lateinit var checker: WinChecker
-    private val player = Player.P1
-    private val cell = Cell.forPlayer(player)
+    private lateinit var winChecker: WinChecker
 
     @BeforeEach
-    fun setup() {
+    fun setUp() {
         board = Board(rows = 6, cols = 7)
-        checker = WinChecker()
+        winChecker = WinChecker()
     }
 
     @Test
-    fun `detects horizontal win of four coins`() {
-        board.setAt(Position(3, 1), cell)
-        board.setAt(Position(4, 1), cell)
-        board.setAt(Position(5, 1), cell)
-        board.setAt(Position(6, 1), cell)
+    fun `horizontalWin returns true for four consecutive coins`() {
+        place(Player.P1, 3, 1)
+        place(Player.P1, 4, 1)
+        place(Player.P1, 5, 1)
+        place(Player.P1, 6, 1)
 
-        val result = checker.horizontalWin(board, Position(6, 1), player)
-
-        assertTrue(result)
+        assertTrue(winChecker.horizontalWin(board, Position(6, 1), Player.P1))
     }
 
     @Test
-    fun `does not detect win with only three coins`() {
-        board.setAt(Position(3, 1), cell)
-        board.setAt(Position(4, 1), cell)
-        board.setAt(Position(5, 1), cell)
+    fun `horizontalWin returns false when there are fewer than four consecutive coins`() {
+        place(Player.P1, 3, 1)
+        place(Player.P1, 4, 1)
+        place(Player.P1, 5, 1)
 
-        val result = checker.horizontalWin(board, Position(5, 1), player)
-
-        assertFalse(result)
+        assertFalse(winChecker.horizontalWin(board, Position(5, 1), Player.P1))
     }
 
     @Test
-    fun `detects win when coin is placed in the middle of a sequence`() {
-        board.setAt(Position(3, 1), cell)
-        board.setAt(Position(4, 1), cell)
-        board.setAt(Position(6, 1), cell)
-        board.setAt(Position(7, 1), cell)
+    fun `verticalWin returns true for four consecutive coins`() {
+        place(Player.P1, 3, 1)
+        place(Player.P1, 3, 2)
+        place(Player.P1, 3, 3)
+        place(Player.P1, 3, 4)
 
-        val result = checker.horizontalWin(board, Position(5, 1), player)
-
-        assertTrue(result)
+        assertTrue(winChecker.verticalWin(board, Position(3, 4), Player.P1))
     }
 
     @Test
-    fun `does not count opponent coins`() {
-        val opponent = Cell.forPlayer(Player.P2)
+    fun `verticalWin returns false when there are fewer than four consecutive coins`() {
+        place(Player.P1, 3, 1)
+        place(Player.P1, 3, 2)
+        place(Player.P1, 3, 3)
 
-        board.setAt(Position(3, 1), cell)
-        board.setAt(Position(4, 1), cell)
-        board.setAt(Position(5, 1), opponent)
-        board.setAt(Position(6, 1), cell)
-
-        val result = checker.horizontalWin(board, Position(6, 1), player)
-
-        assertFalse(result)
+        assertFalse(winChecker.verticalWin(board, Position(3, 3), Player.P1))
     }
 
     @Test
-    fun `detects win when sequence extends to the left`() {
-        board.setAt(Position(1, 1), cell)
-        board.setAt(Position(2, 1), cell)
-        board.setAt(Position(3, 1), cell)
-        board.setAt(Position(4, 1), cell)
+    fun `diagonalWin returns true for both diagonal directions`() {
+        place(Player.P1, 1, 1)
+        place(Player.P1, 2, 2)
+        place(Player.P1, 3, 3)
+        place(Player.P1, 4, 4)
 
-        val result = checker.horizontalWin(board, Position(4, 1), player)
+        place(Player.P2, 1, 4)
+        place(Player.P2, 2, 3)
+        place(Player.P2, 3, 2)
+        place(Player.P2, 4, 1)
 
-        assertTrue(result)
+        assertTrue(winChecker.diagonalWin(board, Position(4, 4), Player.P1))
+        assertTrue(winChecker.diagonalWin(board, Position(4, 1), Player.P2))
+    }
+
+    @Test
+    fun `diagonalWin returns false when there are fewer than four consecutive diagonal coins`() {
+        place(Player.P1, 2, 2)
+        place(Player.P1, 3, 3)
+        place(Player.P1, 4, 4)
+
+        assertFalse(winChecker.diagonalWin(board, Position(4, 4), Player.P1))
+    }
+
+    private fun place(player: Player, column: Int, row: Int) {
+        board.setAt(Position(column, row), Cell.forPlayer(player))
     }
 }
