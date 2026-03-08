@@ -1,3 +1,5 @@
 package connect.four
 
-class App { }
+class App {
+    fun startupMessage(): String = ""
+}

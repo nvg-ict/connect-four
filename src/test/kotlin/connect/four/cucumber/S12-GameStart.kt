@@ -8,6 +8,7 @@ import io.cucumber.java.en.When
 
 class GameStart {
     private lateinit var app: App
+    private var displayedText: String = ""
 
     @Given("the application is launched")
     fun theApplicationIsLaunched() {
@@ -16,7 +17,7 @@ class GameStart {
 
     @When("the game starts")
     fun theGameStarts() {
-        TODO("Implement step")
+        displayedText = app.startupMessage()
     }
 
     @Then("a welcome message and basic rules are displayed")
