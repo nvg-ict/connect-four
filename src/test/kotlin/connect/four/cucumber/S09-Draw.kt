@@ -44,9 +44,21 @@ class Draw {
         }
     }
 
-    @And("no {int}-in-a-row exists for either player")
-    fun noInARowExistsForEitherPlayer(count: Int) {
-        TODO("Implement step")
+    @And("no 4-in-a-row exists for either player")
+    fun noInARowExistsForEitherPlayer() {
+        val winChecker = WinChecker()
+        for (row in 1..game.gameRules.rows) {
+            for (col in 1..game.gameRules.cols) {
+                val position = Position(col, row)
+                val cell = game.board.getAt(position)
+
+                if (cell == Cell.PLAYER1) {
+                    assertFalse(winChecker.isWin(game.board, position, connect.four.Player.P1))
+                } else if (cell == Cell.PLAYER2) {
+                    assertFalse(winChecker.isWin(game.board, position, connect.four.Player.P2))
+                }
+            }
+        }
     }
 
     @When("Player {int} attempts to make a move and finds all columns full")
