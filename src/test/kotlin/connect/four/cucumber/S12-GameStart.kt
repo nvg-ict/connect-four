@@ -1,15 +1,17 @@
 package connect.four.cucumber
 
+import connect.four.App
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class GameStart {
+    private lateinit var app: App
 
     @Given("the application is launched")
     fun theApplicationIsLaunched() {
-        TODO("Implement step")
+        app = App()
     }
 
     @When("the game starts")
