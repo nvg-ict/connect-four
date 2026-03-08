@@ -1,15 +1,27 @@
 package connect.four.cucumber
 
+import connect.four.App
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class RepeatGames {
+    private lateinit var app: App
 
     @Given("a game has ended with a winner")
     fun aGameHasEndedWithAWinner() {
-        TODO("Implement step")
+        app = App()
+        app.startGame()
+
+        val game = app.game!!
+        game.applyMove(1)
+        game.applyMove(7)
+        game.applyMove(2)
+        game.applyMove(7)
+        game.applyMove(3)
+        game.applyMove(7)
+        game.applyMove(4)
     }
 
     @When("the game displays {string}")
