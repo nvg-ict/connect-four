@@ -2,6 +2,7 @@ package connect.four.cucumber
 
 import connect.four.Cell
 import connect.four.Game
+import connect.four.GameMoveResult
 import connect.four.GameRules
 import connect.four.Position
 import connect.four.WinChecker
@@ -10,10 +11,10 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions.assertFalse
-import kotlin.test.assertEquals
 
 class Draw {
     private lateinit var game: Game
+    private lateinit var gameMoveResult: GameMoveResult
 
     @Given("all {int} board positions are filled with alternating yellow and red coins")
     fun allBoardPositionsAreFilledWithAlternatingYellowAndRedCoins(positions: Int) {
@@ -61,9 +62,11 @@ class Draw {
         }
     }
 
+    @Suppress("UnusedParameter")
     @When("Player {int} attempts to make a move and finds all columns full")
     fun playerAttemptsToMakeAMoveAndFindsAllColumnsFull(player: Int) {
-        TODO("Implement step")
+        // Column or player doesnt matter, board is full!
+        gameMoveResult = game.applyMove(1)
     }
 
     @Then("the game declares {string}")
