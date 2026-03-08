@@ -43,10 +43,11 @@ class RepeatGames {
         val output = BoardRenderer().render(app.game!!.board)
 
         val count = output.count { it.toString() == "⚪" }
-        assertEquals(42, count)    }
+        assertEquals(42, count)
+    }
 
     @And("a new game begins with Player {int}'s turn")
     fun aNewGameBeginsWithPlayersTurn(player: Int) {
-        TODO("Implement step")
+        assertEquals("Player ${player}'s turn", app.game!!.turnIndicator())
     }
 }
