@@ -10,4 +10,6 @@ class App {
         - Player 1 goes first, then players alternate turns.
         - Get 4 in a row horizontally, vertically, or diagonally to win.
         - The game is a draw when the board is full and nobody has won.
+        
+        Press any key to start the game.
     """.trimIndent()}

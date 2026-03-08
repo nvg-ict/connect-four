@@ -59,7 +59,7 @@ class GameStart {
 
     @And("the player is prompted to press a key to start the game")
     fun thePlayerIsPromptedToPressAKeyToStartTheGame() {
-        TODO("Implement step")
+        assertTrue(displayedText.contains("Press any key"))
     }
 
     @And("upon pressing that key, the game begins with a fresh board")
