@@ -27,7 +27,7 @@ class WinDetectionSteps {
 
     @When("Player {int} drops a final coin in column {int}")
     fun playerDropsFinalCoinInColumn(player: Int, column: Int) {
-        TODO("Implement step")
+        game.applyMove(column)
     }
 
     @Then("the game detects a vertical win for Player {int}")
