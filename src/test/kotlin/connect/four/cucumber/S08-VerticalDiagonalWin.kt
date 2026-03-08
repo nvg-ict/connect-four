@@ -13,6 +13,7 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions.assertTrue
 import kotlin.test.assertEquals
+import kotlin.text.toInt
 
 class WinDetectionSteps {
     private lateinit var game: Game
@@ -76,7 +77,16 @@ class WinDetectionSteps {
 
     @When("Player {int} drops a final coin completing the diagonal")
     fun playerDropsFinalCoinCompletingDiagonal(player: Int) {
-        TODO("Implement step")
+        val currentPlayer = if (player == 1) Player.P1 else Player.P2
+
+        val row = finalMove["row"]!!.toInt()
+        val col = finalMove["col"]!!.toInt()
+
+        for (r in 1 until row) {
+            game.board.setAt(Position(col, r), Cell.forPlayer(currentPlayer.other()))
+        }
+
+        gameMoveResult = game.applyMove(col)
     }
 
     @Then("the game detects a diagonal win for Player {int}")
