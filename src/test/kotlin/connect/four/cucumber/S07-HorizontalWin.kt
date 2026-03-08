@@ -5,6 +5,7 @@ import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
 import connect.four.Player
+import connect.four.Position
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -15,10 +16,11 @@ class HorizontalWin {
     private lateinit var expectedCoin: String
     private lateinit var gameMoveResult: GameMoveResult
 
-    @Given("the board has {int} consecutive coins {string} in row 1, columns {int}-{int}")
+    @Given("the board has {int} consecutive coins {string} in row {int}, columns {int}-{int}")
     fun aGameWithCoinsGetsInitialized(
         count: Int,
         coin: String,
+        row: Int,
         columnFrom: Int,
         columnTo: Int
     ) {
@@ -29,7 +31,7 @@ class HorizontalWin {
         val range = IntRange(columnFrom, columnTo)
 
         for (column in range) {
-            game.board.dropInColumn(column, Cell.PLAYER1)
+            game.board.setAt(Position(column, row), Cell.PLAYER1)
         }
     }
 
@@ -46,5 +48,6 @@ class HorizontalWin {
         val currentPlayer = if (player == 1) Player.P1 else Player.P2
 
         assertEquals(GameMoveResult.Win(currentPlayer), gameMoveResult)
+        assertEquals(Cell.forPlayer(currentPlayer).value, expectedCoin)
     }
 }
