@@ -29,7 +29,7 @@ class RepeatGames {
 
     @When("the game displays {string}")
     fun theGameDisplays(message: String) {
-        displayedMessage = app.playAgainMessage()
+        displayedMessage = app.playAgainMessage
         assertEquals(message, displayedMessage)
     }
 
@@ -42,7 +42,7 @@ class RepeatGames {
     fun theBoardIsClearedToAllEmptyPositions(symbol: String) {
         val output = BoardRenderer().render(app.game!!.board)
 
-        val count = output.count { it.toString() == "⚪" }
+        val count = output.count { it.toString() == symbol }
         assertEquals(42, count)
     }
 

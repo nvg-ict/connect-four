@@ -23,7 +23,8 @@ class App(
         game = Game(gameRules)
     }
 
-    fun playAgainMessage(): String = "Play again? (yes/no)"
+    val playAgainMessage: String
+        get() = "Play again? (yes/no)"
 
     fun handlePlayAgainSelection(selection: String) {
         if (selection.equals("yes", ignoreCase = true)) {
