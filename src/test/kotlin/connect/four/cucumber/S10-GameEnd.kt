@@ -7,13 +7,13 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class GameEnd {
-    @Given("Player {int} has just completed {int}-in-a-row")
-    fun playerHasJustCompletedInARow(player: Int, count: Int) {
+    @Given("Player {int} has just completed 4-in-a-row")
+    fun playerHasJustCompletedInARow(player: Int) {
         TODO("Implement step")
     }
 
-    @Given("the board is completely full with no {int}-in-a-row for either player")
-    fun boardIsCompletelyFullWithNoInARow(count: Int) {
+    @Given("the board is completely full with no 4-in-a-row for either player")
+    fun boardIsCompletelyFullWithNoInARow() {
         TODO("Implement step")
     }
 
