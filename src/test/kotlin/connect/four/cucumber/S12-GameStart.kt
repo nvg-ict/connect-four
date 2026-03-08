@@ -5,6 +5,7 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.jupiter.api.Assertions.assertTrue
 
 class GameStart {
     private lateinit var app: App
@@ -22,7 +23,8 @@ class GameStart {
 
     @Then("a welcome message and basic rules are displayed")
     fun aWelcomeMessageAndBasicRulesAreDisplayed() {
-        TODO("Implement step")
+        assertTrue(displayedText.contains("Welcome"))
+        assertTrue(displayedText.contains("Rules"))
     }
 
     @And("the rules explain board is {int} rows by {int} columns")

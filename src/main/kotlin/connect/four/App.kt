@@ -1,5 +1,5 @@
 package connect.four
 
 class App {
-    fun startupMessage(): String = ""
+    fun startupMessage(): String = "Welcome Rules"
 }
