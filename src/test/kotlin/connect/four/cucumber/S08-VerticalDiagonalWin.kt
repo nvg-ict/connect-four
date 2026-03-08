@@ -91,6 +91,7 @@ class WinDetectionSteps {
 
     @Then("the game detects a diagonal win for Player {int}")
     fun theGameDetectsDiagonalWinForPlayer(player: Int) {
-        TODO("Implement step")
+        val currentPlayer = if (player == 1) Player.P1 else Player.P2
+        assertEquals(GameMoveResult.Win(currentPlayer), gameMoveResult)
     }
 }

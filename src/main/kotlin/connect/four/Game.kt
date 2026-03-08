@@ -20,7 +20,8 @@ class Game(
                 val position = drop.position
 
                 if (winChecker.horizontalWin(board, position, currentPlayer) ||
-                    winChecker.verticalWin(board, position, currentPlayer)
+                    winChecker.verticalWin(board, position, currentPlayer) ||
+                    winChecker.diagonalWin(board, position, currentPlayer)
                     ) {
                     GameMoveResult.Win(currentPlayer)
                 } else {

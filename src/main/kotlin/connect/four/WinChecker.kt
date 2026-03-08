@@ -32,4 +32,65 @@ class WinChecker {
 
         return down + up + 1 >= 4
     }
+
+    fun diagonalWin(board: Board, position: Position, player: Player): Boolean {
+        return diagonalDownUpWin(board, position, player) ||
+                diagonalUpDownWin(board, position, player)
+    }
+
+    private fun diagonalDownUpWin(board: Board, position: Position, player: Player): Boolean {
+        val target = Cell.forPlayer(player)
+        val row = position.row
+        val col = position.column
+
+        val downLeft = generateSequence(Position(col - 1, row - 1)) {
+            Position(it.column - 1, it.row - 1)
+        }
+            .takeWhile {
+                it.column >= 1 &&
+                        it.row >= 1 &&
+                        board.getAt(it) == target
+            }
+            .count()
+
+        val upRight = generateSequence(Position(col + 1, row + 1)) {
+            Position(it.column + 1, it.row + 1)
+        }
+            .takeWhile {
+                it.column <= board.cols &&
+                        it.row <= board.rows &&
+                        board.getAt(it) == target
+            }
+            .count()
+
+        return downLeft + upRight + 1 >= 4
+    }
+
+    private fun diagonalUpDownWin(board: Board, position: Position, player: Player): Boolean {
+        val target = Cell.forPlayer(player)
+        val row = position.row
+        val col = position.column
+
+        val upLeft = generateSequence(Position(col - 1, row + 1)) {
+            Position(it.column - 1, it.row + 1)
+        }
+            .takeWhile {
+                it.column >= 1 &&
+                        it.row <= board.rows &&
+                        board.getAt(it) == target
+            }
+            .count()
+
+        val downRight = generateSequence(Position(col + 1, row - 1)) {
+            Position(it.column + 1, it.row - 1)
+        }
+            .takeWhile {
+                it.column <= board.cols &&
+                        it.row >= 1 &&
+                        board.getAt(it) == target
+            }
+            .count()
+
+        return upLeft + downRight + 1 >= 4
+    }
 }
