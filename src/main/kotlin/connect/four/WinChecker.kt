@@ -1,11 +1,11 @@
 package connect.four
 
 class WinChecker {
-    @Suppress("MagicNumber")
     fun isWin(board: Board, origin: Position, player: Player): Boolean {
         return findWinningPositions(board, origin, player).isNotEmpty()
     }
 
+    @Suppress("MagicNumber")
     fun findWinningPositions(board: Board, origin: Position, player: Player): List<Position> {
         val directions = listOf(
             1 to 0,
