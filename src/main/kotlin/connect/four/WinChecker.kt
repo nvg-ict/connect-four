@@ -1,10 +1,19 @@
 package connect.four
 
 class WinChecker {
-    fun isWin(board: Board, position: Position, player: Player): Boolean =
-        horizontalWin(board, position, player) ||
-                verticalWin(board, position, player) ||
-                diagonalWin(board, position, player)
+    fun isWin(board: Board, position: Position, player: Player): Boolean {
+        val directions = listOf(
+            1 to 0,
+            0 to 1,
+            1 to 1,
+            1 to -1
+        )
+
+        return directions.any { (columnStep, rowStep) ->
+            count(board, position, player, columnStep, rowStep) +
+                    count(board, position, player, -columnStep, -rowStep) + 1 >= 4
+        }
+    }
 
     private fun count(
         board: Board,
@@ -25,31 +34,4 @@ class WinChecker {
             }
             .count()
     }
-
-    private fun lineCount(
-        board: Board,
-        position: Position,
-        player: Player,
-        columnStep: Int,
-        rowStep: Int
-    ): Int =
-        count(board, position, player, columnStep, rowStep) +
-                count(board, position, player, -columnStep, -rowStep) + 1
-
-    fun horizontalWin(board: Board, position: Position, player: Player): Boolean =
-        lineCount(board, position, player, 1, 0) >= 4
-
-    fun verticalWin(board: Board, position: Position, player: Player): Boolean =
-        lineCount(board, position, player, 0, 1) >= 4
-
-    fun diagonalWin(board: Board, position: Position, player: Player): Boolean {
-        return diagonalDownUpWin(board, position, player) ||
-                diagonalUpDownWin(board, position, player)
-    }
-
-    private fun diagonalDownUpWin(board: Board, position: Position, player: Player): Boolean =
-        lineCount(board, position, player, 1, 1) >= 4
-
-    private fun diagonalUpDownWin(board: Board, position: Position, player: Player): Boolean =
-        lineCount(board, position, player, 1, -1) >= 4
 }
