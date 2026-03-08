@@ -1,7 +1,8 @@
 package connect.four
 
-class Game(val gameRules: GameRules,
-           private val winChecker: WinChecker = WinChecker()
+class Game(
+    val gameRules: GameRules,
+    private val winChecker: WinChecker = WinChecker()
 ) {
     val board = Board(rows = gameRules.rows, cols = gameRules.cols)
     var currentPlayer: Player = Player.P1
@@ -37,23 +38,6 @@ sealed class GameMoveResult {
     data class Failure(val reason: String) : GameMoveResult()
 }
 
-class WinChecker {
-    fun horizontalWin(board: Board, position: Position, player: Player): Boolean {
-        val target = Cell.forPlayer(player)
-        val row = position.row
-        val col = position.column
-
-        val left = generateSequence(col - 1) { it - 1 }
-            .takeWhile { it >= 1 && board.getAt(Position(it, row)) == target }
-            .count()
-
-        val right = generateSequence(col + 1) { it + 1 }
-            .takeWhile { it <= board.cols && board.getAt(Position(it, row)) == target }
-            .count()
-
-        return left + right + 1 >= 4
-    }
-}
 
 enum class Player(val label: String) {
     P1("Player 1"),

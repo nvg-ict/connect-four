@@ -1,5 +1,10 @@
-package connect.four
+package connect.four.cucumber
 
+import connect.four.Cell
+import connect.four.Game
+import connect.four.GameMoveResult
+import connect.four.GameRules
+import connect.four.Player
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When

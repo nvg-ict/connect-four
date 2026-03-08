@@ -1,5 +1,8 @@
-package connect.four
+package connect.four.cucumber
 
+import connect.four.BoardRenderer
+import connect.four.Game
+import connect.four.GameRules
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
