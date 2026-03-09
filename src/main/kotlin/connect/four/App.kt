@@ -18,7 +18,7 @@ class App(
         } while (askToPlayAgain())
     }
 
-    private fun startupMessage(): String = """
+    fun startupMessage(): String = """
         Welcome to Connect Four!
 
         Rules:
