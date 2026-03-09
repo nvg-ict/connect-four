@@ -1,12 +1,13 @@
 plugins {
     kotlin("jvm") version "2.3.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
+    id("com.gradleup.shadow") version "8.3.1"
 }
 
 apply<TechDebtPlugin>()
 
 group = "nl.craftsmen"
-version = "1.0-SNAPSHOT"
+version = findProperty("appVersion")?.toString() ?: "dev"
 
 repositories {
     mavenCentral()
@@ -37,4 +38,11 @@ tasks.test {
 tasks.check {
     dependsOn(tasks.detekt)
     dependsOn("techDebtTodoCheck")
+}
+
+tasks.shadowJar {
+    archiveFileName.set("connect-four.jar")
+    manifest {
+        attributes["Main-Class"] = "MainKt"
+    }
 }
