@@ -2,28 +2,28 @@ package connect.four
 
 class BoardRenderer {
     fun render(board: Board): String = buildString {
-        // Column labels (align with row labels by indenting 2 spaces)
-        append("  ")
-        appendLine((1..board.cols).joinToString(" "))
+        append("   ")
+        appendLine((1..board.cols).joinToString("  "))
 
-        // Rows bottom -> top (row label + cells)
         for (row in board.rows downTo 1) {
             append(row)
-            append(' ')
-            val line = (1..board.cols)
-                .joinToString("") { col ->
-                    val cell = board.getAt(Position(col, row))
-                    renderCell(cell)
-                }
-            appendLine(line)
+            append(" |")
+
+            for (col in 1..board.cols) {
+                val cell = board.getAt(Position(col, row))
+                append(renderCell(cell))
+                append('|')
+            }
+
+            appendLine()
         }
-    }.removeSuffix("\n").trimEnd()
+    }.trimEnd()
 
     private fun renderCell(cell: Cell): String {
-        return if (cell.isWinning) {
-            "[${cell.value}]"
-        } else {
-            cell.value
+        return when (cell.type) {
+            CellType.EMPTY -> "O "
+            CellType.PLAYER1 -> if (cell.isWinning) "🟨" else "🟡"
+            CellType.PLAYER2 -> if (cell.isWinning) "🟥" else "🔴"
         }
     }
 }

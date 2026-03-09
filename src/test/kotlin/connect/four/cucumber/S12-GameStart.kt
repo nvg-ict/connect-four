@@ -75,7 +75,7 @@ class GameStart {
         assertNotNull(app.game)
         val output = BoardRenderer().render(app.game!!.board)
 
-        val count = output.count { it.toString() == "⚪" }
+        val count = output.count { it.toString() == "O" }
         assertEquals(42, count)
     }
 }
