@@ -4,7 +4,9 @@ import connect.four.Cell
 import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
+import connect.four.GameStatus
 import connect.four.Position
+import connect.four.toPlayer
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -56,7 +58,7 @@ class CoinDrop {
 
     @When("Player {int} attempts to drop a coin in column {int}")
     fun playerAttemptsToDropACoinInColumn(player: Int, column: Int) {
-        assertEquals("Player ${player}'s turn",game.turnIndicator())
+        assertEquals(GameStatus.Turn(player.toPlayer()),game.status())
         gameMoveResult = game.applyMove(column)
     }
 
@@ -72,11 +74,11 @@ class CoinDrop {
 
     @And("Player {int} is re-prompted to select a different column")
     fun playerIsRepromptedToSelectADifferentColumn(player: Int) {
-        assertEquals("Player ${player}'s turn",game.turnIndicator())
+        assertEquals(GameStatus.Turn(player.toPlayer()),game.status())
     }
 
     @And("it remains Player {int}'s turn \\(turn does not advance)")
     fun itRemainsPlayersTurn(player: Int) {
-        assertEquals("Player ${player}'s turn",game.turnIndicator())
+        assertEquals(GameStatus.Turn(player.toPlayer()),game.status())
     }
 }

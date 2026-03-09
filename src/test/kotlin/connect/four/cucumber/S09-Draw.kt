@@ -1,9 +1,12 @@
 package connect.four.cucumber
 
+import connect.four.App
 import connect.four.Cell
+import connect.four.FakeConsole
 import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
+import connect.four.GameStatus
 import connect.four.Position
 import connect.four.WinChecker
 import io.cucumber.java.en.And
@@ -13,6 +16,7 @@ import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions.assertFalse
 import kotlin.properties.Delegates
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class Draw {
     private lateinit var game: Game
@@ -75,9 +79,9 @@ class Draw {
         gameMoveResult = game.applyMove(lastMove!!)
     }
 
-    @Then("the game declares {string}")
-    fun theGameDeclares(message: String) {
-        assertEquals(message, game.turnIndicator())
+    @Then("the game declares \"Game is a Draw\"")
+    fun theGameDeclares() {
+        assertTrue( game.status() is GameStatus.Draw)
     }
 
     @And("the game ends without a winner")

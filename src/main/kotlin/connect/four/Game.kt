@@ -1,5 +1,8 @@
 package connect.four
 
+import connect.four.Player.P1
+import connect.four.Player.P2
+
 class Game(
     val gameRules: GameRules,
     private val winChecker: WinChecker = WinChecker()
@@ -9,13 +12,12 @@ class Game(
 
     private var lastMoveResult: GameMoveResult? = null
 
-    fun turnIndicator(): String {
-        return when (val result = lastMoveResult) {
-            is GameMoveResult.Win -> "${result.player.label} wins with 4 in a row!"
-            GameMoveResult.Draw -> "Game is a Draw"
-            else -> "${currentPlayer.label}'s turn"
+    fun status(): GameStatus =
+        when (val result = lastMoveResult) {
+            is GameMoveResult.Win -> GameStatus.Win(result.player)
+            GameMoveResult.Draw -> GameStatus.Draw
+            else -> GameStatus.Turn(currentPlayer)
         }
-    }
 
     fun applyMove(column: Int): GameMoveResult {
         val result = when (val drop = board.dropInColumn(column, Cell.forPlayer(currentPlayer))) {
@@ -56,6 +58,11 @@ sealed class GameMoveResult {
     data class Failure(val reason: String) : GameMoveResult()
 }
 
+sealed interface GameStatus {
+    data class Turn(val player: Player) : GameStatus
+    data class Win(val player: Player) : GameStatus
+    object Draw : GameStatus
+}
 
 enum class Player(val label: String) {
     P1("Player 1"),
@@ -63,6 +70,13 @@ enum class Player(val label: String) {
 
     fun other(): Player = if (this == P1) P2 else P1
 }
+
+fun Int.toPlayer(): Player = when (this) {
+    1 -> P1
+    2 -> P2
+    else -> throw IllegalArgumentException("Unknown player label: $this")
+}
+
 
 data class GameRules(val rows: Int = 6, val cols: Int = 7) {
     val validColumns: IntRange get() = 1..cols

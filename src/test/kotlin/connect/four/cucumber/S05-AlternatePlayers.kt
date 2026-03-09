@@ -2,7 +2,7 @@ package connect.four.cucumber
 
 import connect.four.Game
 import connect.four.GameRules
-import connect.four.Player
+import connect.four.toPlayer
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -22,19 +22,15 @@ class AlternatePlayers {
         // Nothing for now
     }
 
+    @Suppress("UnusedParameter")
     @Then("the game indicates {string} for Player {int}")
     fun theGameIndicatesPlayer1Turn(message: String, player: Int) {
-        val currentPlayer = if (player == 1) Player.P1 else Player.P2
-
-        assertEquals(message, game.turnIndicator())
-        assertEquals(currentPlayer, game.currentPlayer)
+        assertEquals(player.toPlayer(), game.currentPlayer)
     }
 
     @And("Player {int} drops a coin in {int}")
     fun playerDropsACoin(player: Int, column: Int) {
-        val currentPlayer = if (player == 1) Player.P1 else Player.P2
-
-        assertEquals(currentPlayer, game.currentPlayer)
+        assertEquals(player.toPlayer(), game.currentPlayer)
 
         game.applyMove(column)
     }

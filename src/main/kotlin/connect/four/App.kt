@@ -18,7 +18,7 @@ class App(
         } while (askToPlayAgain())
     }
 
-    fun startupMessage(): String = """
+    private fun startupMessage(): String = """
         Welcome to Connect Four!
 
         Rules:
@@ -53,37 +53,38 @@ class App(
     }
 
     private fun playCurrentGame() {
-        val currentGame = requireNotNull(game) { "Game must be started before playCurrentGame()" }
-        val turnController = TurnController(currentGame)
+        val game = requireNotNull(game)
+        val turnController = TurnController(game)
 
-        var gameEnded = false
-        while (!gameEnded) {
-            console.println(renderer.render(currentGame.board))
-            console.println(currentGame.turnIndicator())
+        while (game.status() is GameStatus.Turn) {
+            console.println(renderer.render(game.board))
+            console.println(statusMessage(game))
             console.print("Enter column: ")
 
             val input = console.readLine().orEmpty()
-            when (val moveResult = turnController.handleInput(input)) {
-                is MoveResult.Rejected -> console.println(moveResult.errorMessage)
-                is MoveResult.Accepted -> {
-                    when (val result = moveResult.gameMoveResult) {
-                        is GameMoveResult.Failure -> console.println(result.reason)
-                        is GameMoveResult.Win -> {
-                            console.println(renderer.render(currentGame.board))
-                            console.println("${result.player.label} wins!")
-                            gameEnded = true
-                        }
-                        GameMoveResult.Draw -> {
-                            console.println(renderer.render(currentGame.board))
-                            console.println("Game is a draw!")
-                            gameEnded = true
-                        }
-                        is GameMoveResult.Success -> Unit
-                    }
-                }
+
+            when (val move = turnController.handleInput(input)) {
+                is MoveResult.Rejected -> console.println(move.errorMessage)
+                is MoveResult.Accepted -> handleGameResult(move.gameMoveResult)
             }
         }
+
+        console.println(renderer.render(game.board))
+        console.println(statusMessage(game))
     }
+
+    private fun handleGameResult(result: GameMoveResult) {
+        if (result is GameMoveResult.Failure) {
+            console.println(result.reason)
+        }
+    }
+
+    private fun statusMessage(game: Game): String =
+        when (val status = game.status()) {
+            is GameStatus.Turn -> "${status.player.label}'s turn"
+            is GameStatus.Win -> "${status.player.label} wins!"
+            GameStatus.Draw -> "Game is a draw!"
+        }
 
     private fun askToPlayAgain(): Boolean {
         while (true) {

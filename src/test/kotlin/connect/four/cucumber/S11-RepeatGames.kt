@@ -3,6 +3,8 @@ package connect.four.cucumber
 import connect.four.App
 import connect.four.BoardRenderer
 import connect.four.FakeConsole
+import connect.four.GameStatus
+import connect.four.toPlayer
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -52,6 +54,6 @@ class RepeatGames {
 
     @And("a new game begins with Player {int}'s turn")
     fun aNewGameBeginsWithPlayersTurn(player: Int) {
-        assertEquals("Player ${player}'s turn", app.game!!.turnIndicator())
+        assertEquals(GameStatus.Turn(player.toPlayer()), app.game!!.status())
     }
 }

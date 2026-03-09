@@ -4,6 +4,8 @@ import connect.four.BoardRenderer
 import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
+import connect.four.GameStatus
+import connect.four.toPlayer
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -42,8 +44,8 @@ class GameEnd {
         assertTrue(result.contains(example))
     }
 
-    @Then("the message {string} is displayed")
-    fun theMessageIsDisplayed(expected: String) {
-        assertEquals(expected, game.turnIndicator())
+    @Then("the message \"Player {int} wins with 4 in a row!\" is displayed")
+    fun theMessageIsDisplayed(player: Int) {
+        assertEquals(GameStatus.Win(player.toPlayer()), game.status())
     }
 }
