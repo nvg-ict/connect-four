@@ -8,10 +8,6 @@ class FakeConsole(
     private val inputQueue = ArrayDeque(inputs)
     val output = mutableListOf<String>()
 
-    fun sendInput(line: String) {
-        inputQueue.addLast(line)
-    }
-
     override fun println(message: String) {
         output += message
     }
