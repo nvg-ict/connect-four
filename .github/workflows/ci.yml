@@ -48,7 +48,7 @@ jobs:
           cache: gradle
 
       - name: Build jar with tag version
-        run: ./gradlew jar -PappVersion=${GITHUB_REF_NAME#v}
+        run: ./gradlew shadowJar -PappVersion=${GITHUB_REF_NAME#v}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
