@@ -2,6 +2,7 @@ package connect.four.cucumber
 
 import connect.four.App
 import connect.four.BoardRenderer
+import connect.four.FakeConsole
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -9,12 +10,15 @@ import io.cucumber.java.en.When
 import kotlin.test.assertEquals
 
 class RepeatGames {
+    private lateinit var console: FakeConsole
     private lateinit var app: App
     private var displayedMessage: String = ""
 
     @Given("a game has ended with a winner")
     fun aGameHasEndedWithAWinner() {
-        app = App()
+        console = FakeConsole()
+        app = App(console)
+
         app.startGame()
 
         val game = app.game!!

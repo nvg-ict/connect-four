@@ -3,32 +3,20 @@ package connect.four
 class TurnController(
     private val game: Game,
     private val validator: ColumnInputValidator = ColumnInputValidator(game.gameRules.validColumns),
-    private val onAcceptedMove: (column: Int) -> Unit
 ) {
     fun handleInput(raw: String): MoveResult =
-        when (val res = validator.validate(raw)) {
-            is MoveResult.Accepted -> {
-                onAcceptedMove(res.column)
-                res
+        when (val validation = validator.validate(raw)) {
+            is ColumnValidation.Valid -> {
+                val gameResult = game.applyMove(validation.column)
+                MoveResult.Accepted(gameResult)
             }
-            is MoveResult.Rejected -> res
+
+            is ColumnValidation.Invalid ->
+                MoveResult.Rejected(validation.errorMessage)
         }
 }
 
-class ColumnInputValidator(private val validRange: IntRange) {
-    fun validate(raw: String): MoveResult {
-        val col = raw.trim().toIntOrNull()
-            ?: return MoveResult.Rejected("Invalid input. Choose a column ${validRange.display()}.")
-
-        return if (col in validRange) MoveResult.Accepted(col)
-         else MoveResult.Rejected("Invalid column. Choose a column ${validRange.display()}.")
-    }
-
-    private fun IntRange.display(): String =
-        "(${this.first}-${this.last})"
-}
-
 sealed interface MoveResult {
-    data class Accepted(val column: Int) : MoveResult
+    data class Accepted(val gameMoveResult: GameMoveResult) : MoveResult
     data class Rejected(val errorMessage: String) : MoveResult
 }

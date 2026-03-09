@@ -9,8 +9,10 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import io.mockk.spyk
+import io.mockk.verify
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class PlayerInput {
     private lateinit var rules: GameRules
@@ -22,10 +24,8 @@ class PlayerInput {
     @Given("it is Player {int}'s turn")
     fun itIsPlayersTurn(player: Int) {
         rules = GameRules()
-        game = Game(rules)
-        controller = TurnController(game) { col ->
-            processedColumn = col
-        }
+        game = spyk(Game(rules))
+        controller = TurnController(game)
         game.currentPlayer = if(player == 1) Player.P1 else Player.P2
     }
 
@@ -40,7 +40,8 @@ class PlayerInput {
 
     @Then("the column number {int} is accepted")
     fun theColumnNumberIsAccepted(column: Int) {
-        assertEquals(MoveResult.Accepted(column), result);
+        processedColumn = column
+        assertTrue(result is MoveResult.Accepted)
     }
 
     @Then("the input is rejected with an error message")
@@ -50,7 +51,7 @@ class PlayerInput {
 
     @And("the game processes the move to drop a coin")
     fun theGameProcessesTheMoveToDropACoin() {
-        assertNotNull(processedColumn)
+        verify { game.applyMove(processedColumn!!) }
     }
 
     @And("Player {int} is re-prompted to select a valid column \\(1-7)")

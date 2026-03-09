@@ -2,6 +2,7 @@ package connect.four.cucumber
 
 import connect.four.App
 import connect.four.BoardRenderer
+import connect.four.FakeConsole
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -11,12 +12,14 @@ import org.junit.jupiter.api.assertNotNull
 import kotlin.test.assertEquals
 
 class GameStart {
+    private lateinit var console: FakeConsole
     private lateinit var app: App
     private var displayedText: String = ""
 
     @Given("the application is launched")
     fun theApplicationIsLaunched() {
-        app = App()
+        console = FakeConsole()
+        app = App(console)
     }
 
     @When("the game starts")
