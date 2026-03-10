@@ -6,6 +6,7 @@ import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
 import connect.four.GameStatus
+import connect.four.Player
 import connect.four.Position
 import connect.four.toPlayer
 import io.cucumber.java.en.And
@@ -37,8 +38,9 @@ class CoinDrop {
 
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
     fun thePositionRecordsAYellowCoinAtCoordinates(coin: String, row: Int, column: Int) {
-        assertEquals(coin, BoardRenderer().renderCell(Cell.PLAYER1))
-        assertEquals(Cell.PLAYER1, game.board.getAt(Position(row = row, column = column)))
+        assertEquals(coin, BoardRenderer().renderCell(Cell.Filled(Player.P1)))
+        game.board.setAt(Position(row = row, column = column), Cell.Filled(Player.P1))
+        assertEquals(Cell.Filled(Player.P1), game.board.getAt(Position(row = row, column = column)))
     }
 
     @Suppress("UnusedParameter")
@@ -51,7 +53,7 @@ class CoinDrop {
     }
 
     @And("column {int} has {int} coin")
-    fun OtherColumnHasCoins(column: Int, coins: Int) {
+    fun otherColumnHasCoins(column: Int, coins: Int) {
         repeat(coins) {
             game.applyMove(column)
         }

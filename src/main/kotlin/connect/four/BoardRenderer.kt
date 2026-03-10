@@ -20,10 +20,12 @@ class BoardRenderer {
     }.trimEnd()
 
     fun renderCell(cell: Cell): String {
-        return when (cell.player) {
-            null -> "O "
-            Player.P1 -> if (cell.isWinning) "🟨" else "🟡"
-            Player.P2 -> if (cell.isWinning) "🟥" else "🔴"
+        return when (cell) {
+            is Cell.Empty -> "O "
+            is Cell.Filled -> when (cell.player) {
+                Player.P1 -> if (cell.isWinning) "🟨" else "🟡"
+                Player.P2 -> if (cell.isWinning) "🟥" else "🔴"
+            }
         }
     }
 }

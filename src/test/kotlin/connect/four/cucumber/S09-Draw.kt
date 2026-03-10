@@ -7,6 +7,7 @@ import connect.four.Game
 import connect.four.GameMoveResult
 import connect.four.GameRules
 import connect.four.GameStatus
+import connect.four.Player
 import connect.four.Position
 import connect.four.WinChecker
 import io.cucumber.java.en.And
@@ -43,12 +44,12 @@ class Draw {
         for (row in 1..game.gameRules.rows) {
             for (col in 1..game.gameRules.cols) {
                 // Skip the top of the specified column to allow for the next move
-                if (row ==game.gameRules.rows && col == column) continue
+                if (row == game.gameRules.rows && col == column) continue
                 val token = pattern[row - 1][col - 1]
                 val cell = when (token) {
-                    'Y' -> Cell.PLAYER1
-                    'R' -> Cell.PLAYER2
-                    else -> Cell.EMPTY
+                    'Y' -> Cell.Filled(Player.P1)
+                    'R' -> Cell.Filled(Player.P2)
+                    else -> Cell.Empty
                 }
 
                 game.board.setAt(Position(col, row), cell)
@@ -64,9 +65,9 @@ class Draw {
                 val position = Position(col, row)
                 val cell = game.board.getAt(position)
 
-                if (cell == Cell.PLAYER1) {
+                if (cell == Cell.Filled(Player.P1)) {
                     assertFalse(winChecker.isWin(game.board, position, connect.four.Player.P1))
-                } else if (cell == Cell.PLAYER2) {
+                } else if (cell == Cell.Filled(Player.P2)) {
                     assertFalse(winChecker.isWin(game.board, position, connect.four.Player.P2))
                 }
             }

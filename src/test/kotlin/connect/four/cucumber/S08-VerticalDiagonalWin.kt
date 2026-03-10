@@ -29,7 +29,7 @@ class WinDetectionSteps {
         val range = IntRange(rowFrom, rowTo)
 
         for (row in range) {
-            game.board.setAt(Position(column, row), Cell.PLAYER2)
+            game.board.setAt(Position(column, row), Cell.Filled(Player.P2))
         }
     }
 
@@ -72,7 +72,7 @@ class WinDetectionSteps {
         setupCoordinates.forEach {
             val row = it["row"]!!.toInt()
             val col = it["col"]!!.toInt()
-            game.board.setAt(Position(col, row), Cell.PLAYER1)
+            game.board.setAt(Position(col, row), Cell.Filled(Player.P1))
         }
     }
 

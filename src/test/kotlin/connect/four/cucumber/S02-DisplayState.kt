@@ -4,7 +4,9 @@ import connect.four.BoardRenderer
 import connect.four.Cell
 import connect.four.Game
 import connect.four.GameRules
+import connect.four.Player
 import connect.four.Position
+import connect.four.toPlayer
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -25,7 +27,7 @@ class DisplayState {
 
     @Given("column {int} row {int} contains a Player {int} coin")
     fun columnRowContainsAPlayerCoin(column: Int, row: Int, player: Int) {
-        game.board.setAt(Position(column, row), Cell.fromId(player) ?: Cell.EMPTY)
+        game.board.setAt(Position(column, row), Cell.Filled(player.toPlayer()))
     }
 
     @When("the board state is displayed")
@@ -51,7 +53,7 @@ class DisplayState {
         for (col in 1..7) {
             for (row in 1..6) {
                 val cell = game.board.getAt(Position(col, row))
-                if(cell == Cell.EMPTY) {
+                if(cell == Cell.Empty) {
                     assertEquals(symbol, boardRenderer.renderCell(cell))
                 }
             }

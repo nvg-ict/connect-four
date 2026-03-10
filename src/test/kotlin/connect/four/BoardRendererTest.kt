@@ -14,31 +14,31 @@ class BoardRendererTest {
 
     @Test
     fun `renderCell returns correct symbol for empty cell`() {
-        val cell = Cell(null)
+        val cell = Cell.Empty
         assertEquals("O ", renderer.renderCell(cell))
     }
 
     @Test
     fun `renderCell returns correct symbol for Player 1`() {
-        val cell = Cell(Player.P1)
+        val cell = Cell.Filled(Player.P1)
         assertEquals("🟡", renderer.renderCell(cell))
     }
 
     @Test
     fun `renderCell returns correct symbol for Player 2`() {
-        val cell = Cell(Player.P2)
+        val cell = Cell.Filled(Player.P2)
         assertEquals("🔴", renderer.renderCell(cell))
     }
 
     @Test
     fun `renderCell returns correct symbol for winning Player 1`() {
-        val cell = Cell(Player.P1, isWinning = true)
+        val cell = Cell.Filled(Player.P1, isWinning = true)
         assertEquals("🟨", renderer.renderCell(cell))
     }
 
     @Test
     fun `renderCell returns correct symbol for winning Player 2`() {
-        val cell = Cell(Player.P2, isWinning = true)
+        val cell = Cell.Filled(Player.P2, isWinning = true)
         assertEquals("🟥", renderer.renderCell(cell))
     }
 

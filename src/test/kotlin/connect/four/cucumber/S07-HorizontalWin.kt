@@ -32,7 +32,7 @@ class HorizontalWin {
         val range = IntRange(columnFrom, columnTo)
 
         for (column in range) {
-            game.board.setAt(Position(column, row), Cell.PLAYER1)
+            game.board.setAt(Position(column, row), Cell.Filled(Player.P1))
         }
     }
 
