@@ -100,7 +100,8 @@ class AppTest {
     fun `waitForPlayerToStart reads input`() {
         console.addInput("")
         app.waitForPlayerToStart()
-        // inputQueue is private, so we can't check directly. Instead, check that readLine returns null after consuming input.
+        // inputQueue is private, so we can't check directly.
+        // Instead, check that readLine returns null after consuming input.
         assertTrue(console.readLine() == null)
     }
 
