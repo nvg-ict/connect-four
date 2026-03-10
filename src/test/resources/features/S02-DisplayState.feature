@@ -7,4 +7,4 @@ Feature: Display state
     When the board state is displayed
     Then Player 1's coin shows as "🟡" in column 1 row 1
     And Player 2's coin shows as "🔴" in column 2 row 1
-    And empty positions show as "⚪"
+    And empty positions show as "O "

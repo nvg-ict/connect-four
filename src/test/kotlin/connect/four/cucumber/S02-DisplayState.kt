@@ -37,13 +37,13 @@ class DisplayState {
     @Then("Player 1's coin shows as {string} in column {int} row {int}")
     fun player1CoinShowsAsInPosition(symbol: String, column: Int, row: Int) {
         val cell = game.board.getAt(Position(column, row))
-        assert(cell.value == symbol)
+        assert(boardRenderer.renderCell(cell) == symbol)
     }
 
     @Then("Player 2's coin shows as {string} in column {int} row {int}")
     fun player2CoinShowsAsInPosition(symbol: String, column: Int, row: Int) {
         val cell = game.board.getAt(Position(column, row))
-        assert(cell.value == symbol)
+        assert(boardRenderer.renderCell(cell) == symbol)
     }
 
     @Then("empty positions show as {string}")
@@ -52,7 +52,7 @@ class DisplayState {
             for (row in 1..6) {
                 val cell = game.board.getAt(Position(col, row))
                 if(cell == Cell.EMPTY) {
-                    assertEquals(symbol, cell.value)
+                    assertEquals(symbol, boardRenderer.renderCell(cell))
                 }
             }
         }

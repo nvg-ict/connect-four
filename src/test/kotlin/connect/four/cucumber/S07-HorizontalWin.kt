@@ -1,5 +1,6 @@
 package connect.four.cucumber
 
+import connect.four.BoardRenderer
 import connect.four.Cell
 import connect.four.Game
 import connect.four.GameMoveResult
@@ -48,6 +49,6 @@ class HorizontalWin {
         val currentPlayer = if (player == 1) Player.P1 else Player.P2
 
         assertEquals(GameMoveResult.Win(currentPlayer), gameMoveResult)
-        assertEquals(Cell.forPlayer(currentPlayer).value, expectedCoin)
+        assertEquals(BoardRenderer().renderCell(Cell.forPlayer(currentPlayer)), expectedCoin)
     }
 }

@@ -1,5 +1,6 @@
 package connect.four.cucumber
 
+import connect.four.BoardRenderer
 import connect.four.Cell
 import connect.four.Game
 import connect.four.GameMoveResult
@@ -36,7 +37,7 @@ class CoinDrop {
 
     @Then("the position records a yellow coin {string} at coordinates \\(row: {int}, column: {int})")
     fun thePositionRecordsAYellowCoinAtCoordinates(coin: String, row: Int, column: Int) {
-        assertEquals(coin, Cell.PLAYER1.value)
+        assertEquals(coin, BoardRenderer().renderCell(Cell.PLAYER1))
         assertEquals(Cell.PLAYER1, game.board.getAt(Position(row = row, column = column)))
     }
 

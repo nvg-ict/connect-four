@@ -19,11 +19,11 @@ class BoardRenderer {
         }
     }.trimEnd()
 
-    private fun renderCell(cell: Cell): String {
-        return when (cell.type) {
-            CellType.EMPTY -> "O "
-            CellType.PLAYER1 -> if (cell.isWinning) "🟨" else "🟡"
-            CellType.PLAYER2 -> if (cell.isWinning) "🟥" else "🔴"
+    fun renderCell(cell: Cell): String {
+        return when (cell.player) {
+            null -> "O "
+            Player.P1 -> if (cell.isWinning) "🟨" else "🟡"
+            Player.P2 -> if (cell.isWinning) "🟥" else "🔴"
         }
     }
 }

@@ -41,33 +41,20 @@ sealed interface DropResult {
 }
 
 data class Cell(
-    val type: CellType,
+    val player: Player? = null,
     val isWinning: Boolean = false
 ) {
-    val value get() = type.value
-
     companion object {
-        val EMPTY = Cell(CellType.EMPTY)
-        val PLAYER1 = Cell(CellType.PLAYER1)
-        val PLAYER2 = Cell(CellType.PLAYER2)
+        val EMPTY = Cell()
+        val PLAYER1 = Cell(Player.P1)
+        val PLAYER2 = Cell(Player.P2)
 
-        fun fromId(id: Int): Cell? = CellType.fromId(id)?.let(::Cell)
-        fun forPlayer(p: Player): Cell = Cell(CellType.forPlayer(p))
-    }
-}
-
-enum class CellType(
-    val value: String,
-    val id: Int? = null
-) {
-    EMPTY("⚪"),
-    PLAYER1("🟡", 1),
-    PLAYER2("🔴", 2);
-
-    companion object {
-        fun fromId(id: Int): CellType? = entries.find { it.id == id }
-        fun forPlayer(p: Player): CellType =
-            if (p == Player.P1) PLAYER1 else PLAYER2
+        fun fromId(id: Int): Cell? = when (id) {
+            1 -> PLAYER1
+            2 -> PLAYER2
+            else -> EMPTY
+        }
+        fun forPlayer(p: Player): Cell = Cell(p)
     }
 }
 
