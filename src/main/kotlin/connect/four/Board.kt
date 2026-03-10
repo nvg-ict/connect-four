@@ -57,8 +57,3 @@ data class Cell(
         fun forPlayer(p: Player): Cell = Cell(p)
     }
 }
-
-data class Position(val column: Int, val row: Int) {
-    val rowIndex get() = row - 1
-    val columnIndex get() = column - 1
-}

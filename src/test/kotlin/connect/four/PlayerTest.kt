@@ -1,9 +1,10 @@
 package connect.four
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.CsvSource
 
 class PlayerTest {
     @Test
@@ -20,10 +21,20 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [1, 2])
-    fun `int can be parsed to player`() {
-        val player = 1.toPlayer()
+    @CsvSource("1,P1", "2,P2")
+    fun `int can be parsed to player`(input: Int, expected: String) {
+        val player = input.toPlayer()
+        val expectedPlayer = if (expected == "P1") Player.P1 else Player.P2
 
-        assertEquals(Player.P1, player)
+        assertEquals(expectedPlayer, player)
+    }
+
+    @Test
+    fun `invalid int throws when parsed to player`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            3.toPlayer()
+        }
+
+        assertEquals("Unknown player label: 3", exception.message)
     }
 }

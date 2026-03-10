@@ -41,15 +41,12 @@ class WinChecker {
         rowStep: Int
     ): List<Position> {
         val target = Cell.forPlayer(player)
-
-        return generateSequence(Position(origin.column + columnStep, origin.row + rowStep)) {
-            Position(it.column + columnStep, it.row + rowStep)
+        return generateSequence(origin.column + columnStep to origin.row + rowStep) { (col, row) ->
+            col + columnStep to row + rowStep
         }
-            .takeWhile {
-                it.column in 1..board.cols &&
-                        it.row in 1..board.rows &&
-                        board.getAt(it) == target
-            }
+            .takeWhile { (col, row) -> col in 1..board.cols && row in 1..board.rows }
+            .map { (col, row) -> Position(col, row) }
+            .takeWhile { pos -> board.getAt(pos) == target }
             .toList()
     }
 }
