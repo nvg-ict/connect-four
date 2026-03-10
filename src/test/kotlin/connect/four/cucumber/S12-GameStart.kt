@@ -24,7 +24,8 @@ class GameStart {
 
     @When("the game starts")
     fun theGameStarts() {
-        displayedText = app.startupMessage()
+        app.showStartup()
+        displayedText = console.output.joinToString("\n")
     }
 
     @Then("a welcome message and basic rules are displayed")

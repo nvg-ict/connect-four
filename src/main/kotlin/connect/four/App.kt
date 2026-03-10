@@ -8,32 +8,6 @@ class App(
     var game: Game? = null
         private set
 
-    fun run() {
-        showStartup()
-        waitForPlayerToStart()
-
-        do {
-            startGame()
-            playCurrentGame()
-        } while (askToPlayAgain())
-    }
-
-    fun startupMessage(): String = """
-        Welcome to Connect Four!
-
-        Rules:
-        - The board is 6 rows by 7 columns.
-        - Coins are dropped into a column and fall to the lowest available row.
-        - Player 1 goes first, then players alternate turns.
-        - Get 4 in a row horizontally, vertically, or diagonally to win.
-        - The game is a draw when the board is full and nobody has won.
-
-        Press any key to start the game.
-    """.trimIndent()
-
-    val playAgainMessage: String
-        get() = "Play again? (yes/no)"
-
     fun startGame() {
         game = Game(gameRules)
     }
@@ -44,15 +18,15 @@ class App(
         }
     }
 
-    private fun showStartup() {
+    fun showStartup() {
         console.println(startupMessage())
     }
 
-    private fun waitForPlayerToStart() {
+    fun waitForPlayerToStart() {
         console.readLine()
     }
 
-    private fun playCurrentGame() {
+    fun playCurrentGame() {
         val game = requireNotNull(game)
         val turnController = TurnController(game)
 
@@ -73,32 +47,48 @@ class App(
         console.println(statusMessage(game))
     }
 
-    private fun handleGameResult(result: GameMoveResult) {
+    fun handleGameResult(result: GameMoveResult) {
         if (result is GameMoveResult.Failure) {
             console.println(result.reason)
         }
     }
 
-    private fun statusMessage(game: Game): String =
+    fun statusMessage(game: Game): String =
         when (val status = game.status()) {
             is GameStatus.Turn -> "${status.player.label}'s turn"
             is GameStatus.Win -> "${status.player.label} wins!"
             GameStatus.Draw -> "Game is a draw!"
         }
 
-    private fun askToPlayAgain(): Boolean {
-        while (true) {
-            console.println(playAgainMessage)
-            val input = console.readLine().orEmpty()
-
-            when {
-                input.equals("yes", ignoreCase = true) -> {
-                    handlePlayAgainSelection(input)
-                    return true
-                }
-                input.equals("no", ignoreCase = true) -> return false
-                else -> console.println("Please type 'yes' or 'no'.")
+    tailrec fun askToPlayAgain(): Boolean {
+        console.println(playAgainMessage)
+        val input = console.readLine().orEmpty()
+        return when {
+            input.equals("yes", ignoreCase = true) -> {
+                handlePlayAgainSelection(input)
+                true
+            }
+            input.equals("no", ignoreCase = true) -> false
+            else -> {
+                console.println("Please type 'yes' or 'no'.")
+                askToPlayAgain()
             }
         }
     }
+
+    val playAgainMessage: String
+        get() = "Play again? (yes/no)"
+
+    private  fun startupMessage(): String = """
+        Welcome to Connect Four!
+
+        Rules:
+        - The board is 6 rows by 7 columns.
+        - Coins are dropped into a column and fall to the lowest available row.
+        - Player 1 goes first, then players alternate turns.
+        - Get 4 in a row horizontally, vertically, or diagonally to win.
+        - The game is a draw when the board is full and nobody has won.
+
+        Press any key to start the game.
+    """.trimIndent()
 }
