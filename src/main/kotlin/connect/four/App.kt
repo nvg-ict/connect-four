@@ -31,7 +31,6 @@ class App(
         val turnController = TurnController(game)
 
         while (game.status() is GameStatus.Turn) {
-            clearConsole()
             console.println(renderer.render(game.board))
             console.println(statusMessage(game))
             console.print("Enter column: ")
@@ -44,7 +43,6 @@ class App(
             }
         }
 
-        clearConsole()
         console.println(renderer.render(game.board))
         console.println(statusMessage(game))
     }
@@ -93,8 +91,4 @@ class App(
 
         Press any key to start the game.
     """.trimIndent()
-
-    private fun clearConsole() {
-        console.print("\u001b[H\u001b[2J")
-    }
 }
